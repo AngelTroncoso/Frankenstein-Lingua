@@ -1,0 +1,139 @@
+{
+  "patrones": [
+    {
+      "id": 1,
+      "tipo": "animal",
+      "especie": "perro",
+      "señal": "ladrido agudo repetido",
+      "significado": "alerta o solicitud de atención",
+      "confianza_base": 85,
+      "fuente": "Etología canina básica (Coren, 2004)"
+    },
+    {
+      "id": 2,
+      "tipo": "animal",
+      "especie": "gato",
+      "señal": "ronroneo",
+      "significado": "estado de satisfacción o autoconsuelo",
+      "confianza_base": 80,
+      "fuente": "Comportamiento felino (Bradshaw, 2013)"
+    },
+    {
+      "id": 3,
+      "tipo": "animal",
+      "especie": "ballena",
+      "señal": "canto de baja frecuencia",
+      "significado": "comunicación a larga distancia, posible llamado de apareamiento",
+      "confianza_base": 70,
+      "fuente": "Bioacústica marina (Payne & Webb, 1971)"
+    },
+    {
+      "id": 4,
+      "tipo": "animal",
+      "especie": "abeja",
+      "señal": "danza en forma de 8",
+      "significado": "indica dirección y distancia de fuente de néctar",
+      "confianza_base": 90,
+      "fuente": "Von Frisch, 1967 - Premio Nobel"
+    },
+    {
+      "id": 5,
+      "tipo": "animal",
+      "especie": "cuervo",
+      "señal": "graznido múltiple y agudo",
+      "significado": "alarma ante depredador cercano",
+      "confianza_base": 75,
+      "fuente": "Inteligencia aviar (Marzluff & Angell, 2005)"
+    },
+    {
+      "id": 6,
+      "tipo": "planta",
+      "especie": "tomate",
+      "señal": "hojas enrolladas hacia arriba",
+      "significado": "estrés hídrico severo",
+      "confianza_base": 88,
+      "fuente": "Fisiología vegetal aplicada (Taiz & Zeiger, 2010)"
+    },
+    {
+      "id": 7,
+      "tipo": "planta",
+      "especie": "girasol",
+      "señal": "inclinación del tallo hacia la luz",
+      "significado": "fototropismo positivo - búsqueda de luz solar",
+      "confianza_base": 92,
+      "fuente": "Darwin, 1880 - The Power of Movement in Plants"
+    },
+    {
+      "id": 8,
+      "tipo": "planta",
+      "especie": "mimosa pudica",
+      "señal": "cierre rápido de hojas al tacto",
+      "significado": "respuesta defensiva ante estímulo mecánico",
+      "confianza_base": 95,
+      "fuente": "Tigmonastia vegetal (Volkov et al., 2010)"
+    },
+    {
+      "id": 9,
+      "tipo": "planta",
+      "especie": "orquídea",
+      "señal": "raíces aéreas verdes",
+      "significado": "fotosíntesis radicular - necesita humedad ambiental",
+      "confianza_base": 82,
+      "fuente": "Botánica de orquídeas epífitas (Benzing, 1990)"
+    },
+    {
+      "id": 10,
+      "tipo": "planta",
+      "especie": "cactus",
+      "señal": "arrugas en la superficie",
+      "significado": "deshidratación - necesita riego moderado",
+      "confianza_base": 87,
+      "fuente": "Plantas suculentas (Nobel, 2003)"
+    },
+    {
+      "id": 11,
+      "tipo": "hongo",
+      "especie": "shiitake",
+      "señal": "formación de primordios",
+      "significado": "condiciones óptimas de humedad y temperatura para fructificación",
+      "confianza_base": 85,
+      "fuente": "Cultivo de hongos comestibles (Stamets, 2000)"
+    },
+    {
+      "id": 12,
+      "tipo": "hongo",
+      "especie": "hongo de la miel",
+      "señal": "bioluminiscencia nocturna",
+      "significado": "metabolismo activo, posible atracción de dispersores de esporas",
+      "confianza_base": 65,
+      "fuente": "Hongos bioluminiscentes (Oliveira & Stevani, 2009)"
+    },
+    {
+      "id": 13,
+      "tipo": "hongo",
+      "especie": "moho del pan",
+      "señal": "emisión de esporas negras",
+      "significado": "fase reproductiva madura - alta dispersión",
+      "confianza_base": 90,
+      "fuente": "Micología básica (Alexopoulos, 1996)"
+    },
+    {
+      "id": 14,
+      "tipo": "hongo",
+      "especie": "trufa",
+      "señal": "olor intenso a compuestos volátiles",
+      "significado": "madurez completa - señal para animales dispersores",
+      "confianza_base": 88,
+      "fuente": "Ecología de trufas (Hall et al., 2007)"
+    },
+    {
+      "id": 15,
+      "tipo": "animal",
+      "especie": "elefante",
+      "señal": "infrasonido de baja frecuencia",
+      "significado": "comunicación a kilómetros de distancia, coordinación de manada",
+      "confianza_base": 78,
+      "fuente": "Comunicación de elefantes (Poole et al., 1988)"
+    }
+  ]
+}
