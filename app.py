@@ -330,7 +330,12 @@ def sidebar():
         st.markdown("---")
         
         st.markdown("### 🔬 Base de Conocimiento")
-        st.info(f"📚 {len(st.session_state.agente._FrankensteinAgent__class__.__dict__.get('cargar_patrones', lambda: {'patrones': []})())} patrones cargados")
+        try:
+            from agent.tools import cargar_patrones
+            num_patrones = len(cargar_patrones())
+            st.info(f"📚 {num_patrones} patrones cargados")
+        except Exception:
+            st.info("📚 Base de conocimiento activa")
         
         st.markdown("---")
         
