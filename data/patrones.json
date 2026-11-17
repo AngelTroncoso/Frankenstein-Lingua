@@ -134,6 +134,96 @@
       "significado": "comunicación a kilómetros de distancia, coordinación de manada",
       "confianza_base": 78,
       "fuente": "Comunicación de elefantes (Poole et al., 1988)"
+    },
+    {
+      "id": 16,
+      "tipo": "animal",
+      "especie": "delfín",
+      "señal": "clicks ultrasónicos",
+      "significado": "ecolocación para navegación y caza",
+      "confianza_base": 88,
+      "fuente": "Bioacústica de cetáceos (Au & Hastings, 2008)"
+    },
+    {
+      "id": 17,
+      "tipo": "animal",
+      "especie": "lobo",
+      "señal": "aullido prolongado",
+      "significado": "comunicación de posición a la manada o demarcación territorial",
+      "confianza_base": 82,
+      "fuente": "Comportamiento social de cánidos (Mech & Boitani, 2003)"
+    },
+    {
+      "id": 18,
+      "tipo": "animal",
+      "especie": "hormiga",
+      "señal": "rastro de feromonas",
+      "significado": "marcación de camino hacia fuente de alimento",
+      "confianza_base": 93,
+      "fuente": "Comunicación química en insectos sociales (Hölldobler & Wilson, 1990)"
+    },
+    {
+      "id": 19,
+      "tipo": "planta",
+      "especie": "venus atrapamoscas",
+      "señal": "cierre rápido de trampa",
+      "significado": "captura de presa detectada por pelos sensoriales",
+      "confianza_base": 91,
+      "fuente": "Plantas carnívoras (Ellison & Adamec, 2018)"
+    },
+    {
+      "id": 20,
+      "tipo": "planta",
+      "especie": "eucalipto",
+      "señal": "emisión de compuestos volátiles",
+      "significado": "defensa química contra herbívoros y señalización a plantas cercanas",
+      "confianza_base": 79,
+      "fuente": "Comunicación química entre plantas (Karban & Maron, 2002)"
+    },
+    {
+      "id": 21,
+      "tipo": "planta",
+      "especie": "frijol",
+      "señal": "movimiento circadiano de hojas",
+      "significado": "ritmo biológico de 24h - respuesta a ciclo luz-oscuridad",
+      "confianza_base": 86,
+      "fuente": "Cronobiología vegetal (McClung, 2006)"
+    },
+    {
+      "id": 22,
+      "tipo": "hongo",
+      "especie": "penicillium",
+      "señal": "producción de penicilina",
+      "significado": "defensa antibacteriana del territorio microbiano",
+      "confianza_base": 89,
+      "fuente": "Antibióticos fúngicos (Fleming, 1929 / revisión moderna)"
+    },
+    {
+      "id": 23,
+      "tipo": "hongo",
+      "especie": "red micorrízica",
+      "señal": "intercambio de nutrientes",
+      "significado": "simbiosis mutualista - red de comunicación subterránea entre árboles",
+      "confianza_base": 84,
+      "fuente": "Wood Wide Web (Simard et al., 2012)"
+    },
+    {
+      "id": 24,
+      "tipo": "animal",
+      "especie": "luciérnaga",
+      "señal": "patrón de destellos luminosos",
+      "significado": "cortejo reproductivo - cada especie tiene patrón único",
+      "confianza_base": 87,
+      "fuente": "Bioluminiscencia en coleópteros (Lloyd, 1983)"
+    },
+    {
+      "id": 25,
+      "tipo": "animal",
+      "especie": "murciélago",
+      "señal": "pulsos ultrasónicos",
+      "significado": "navegación por ecolocación en oscuridad total",
+      "confianza_base": 90,
+      "fuente": "Sistemas de sonar biológico (Griffin, 1958)"
     }
   ]
 }

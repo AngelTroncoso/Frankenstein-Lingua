@@ -2,12 +2,17 @@
 Agente Frankenstein Lingua - Orquestador principal
 """
 import os
+import logging
 from typing import Dict, Any, Optional, List
 from langchain_openai import ChatOpenAI
 from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from agent.tools import buscar_patrones, evaluar_sensores, TOOLS_DESCRIPTION
 import json
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class FrankensteinAgent:
@@ -29,22 +34,27 @@ class FrankensteinAgent:
         if not self.demo_mode:
             try:
                 if llm_provider == "openai":
+                    logger.info("Inicializando LLM con OpenAI")
                     self.llm = ChatOpenAI(
                         api_key=api_key or os.getenv("OPENAI_API_KEY"),
                         model=model or os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
                         temperature=0.7
                     )
                 elif llm_provider == "mistral":
+                    logger.info("Inicializando LLM con Mistral")
                     self.llm = ChatMistralAI(
                         api_key=api_key or os.getenv("MISTRAL_API_KEY"),
                         model=model or os.getenv("MISTRAL_MODEL", "mistral-small-latest"),
                         temperature=0.7
                     )
                 else:
+                    logger.warning(f"Proveedor desconocido: {llm_provider}. Usando modo demo.")
                     self.demo_mode = True
             except Exception as e:
-                print(f"⚠️ Error al inicializar LLM: {e}. Usando modo demo.")
+                logger.error(f"Error al inicializar LLM: {e}. Usando modo demo.")
                 self.demo_mode = True
+        else:
+            logger.info("Modo demo activado")
     
     def _generar_respuesta_demo(self, observacion: str, contexto: Dict[str, Any]) -> str:
         """Genera una respuesta simulada en modo demo."""

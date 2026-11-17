@@ -22,31 +22,53 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personalizado
+# CSS personalizado mejorado
 st.markdown("""
 <style>
+    /* Animación de entrada */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
     .main-header {
         font-size: 3rem;
         color: #2E7D32;
         text-align: center;
         margin-bottom: 0;
+        animation: fadeIn 0.8s ease-out;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
+    
     .subtitle {
         text-align: center;
         color: #666;
         font-style: italic;
         margin-bottom: 2rem;
+        animation: fadeIn 1s ease-out;
     }
+    
     .stAlert {
         margin-top: 1rem;
+        animation: fadeIn 0.5s ease-out;
     }
+    
     .traduccion-box {
-        background-color: #f0f7f0;
+        background: linear-gradient(135deg, #f0f7f0 0%, #e8f5e9 100%);
         padding: 1.5rem;
         border-radius: 10px;
         border-left: 5px solid #2E7D32;
         margin: 1rem 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        animation: fadeIn 0.6s ease-out;
+        transition: transform 0.2s;
     }
+    
+    .traduccion-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
     .disclaimer-box {
         background-color: #fff3cd;
         padding: 1rem;
@@ -54,6 +76,32 @@ st.markdown("""
         border-left: 4px solid #ffc107;
         margin: 1rem 0;
         font-size: 0.9rem;
+        animation: fadeIn 0.7s ease-out;
+    }
+    
+    /* Mejora de botones */
+    .stButton>button {
+        transition: all 0.3s ease;
+    }
+    
+    .stButton>button:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    /* Tabs mejorados */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 5px 5px 0 0;
+        transition: all 0.2s;
+    }
+    
+    /* Spinner personalizado */
+    .stSpinner > div {
+        border-color: #2E7D32 !important;
     }
 </style>
 """, unsafe_allow_html=True)
