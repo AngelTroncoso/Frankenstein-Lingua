@@ -2,6 +2,7 @@
 Tests para el agente Frankenstein
 """
 import pytest
+from types import SimpleNamespace
 from agent.frankenstein_agent import FrankensteinAgent
 
 
@@ -39,6 +40,58 @@ def test_traducir_frankenstein_demo():
     assert 'traduccion' in resultado
     assert 'traducciones_individuales' in resultado
     assert len(resultado['traducciones_individuales']) == 2
+
+
+def test_analisis_visual_requiere_proveedor_multimodal():
+    """El modo demo debe rechazar imágenes en vez de aparentar analizarlas."""
+    agente = FrankensteinAgent(llm_provider="demo")
+    resultado = agente.traducir_frankenstein(
+        ["Un perro", "Un gato"],
+        imagenes=[(b"imagen", "image/jpeg"), None]
+    )
+
+    assert 'error' in resultado
+    assert "multimodal" in resultado['error']
+
+
+def test_imagenes_se_envian_asociadas_a_su_fuente():
+    """La fusión envía las imágenes al proveedor junto a sus fuentes."""
+    class LLMFalso:
+        def invoke(self, messages):
+            self.messages = getattr(self, "messages", []) + messages
+            contenido = messages[0].content
+            if isinstance(contenido, list):
+                return SimpleNamespace(content="### Compatibilidad visual\nApariencia complementaria.")
+            return SimpleNamespace(
+                content="TIPO: animal\nCONFIANZA: 75\nTRADUCCIÓN:\nSeñal interpretada."
+            )
+
+    agente = FrankensteinAgent(llm_provider="demo")
+    agente.demo_mode = False
+    agente.provider = "openai"
+    agente.llm = LLMFalso()
+
+    resultado = agente.traducir_frankenstein(
+        ["Un perro", "Una planta"],
+        imagenes=[(b"foto-perro", "image/jpeg"), (b"foto-planta", "image/png")]
+    )
+
+    contenido = agente.llm.messages[-1].content
+    bloques_imagen = [bloque for bloque in contenido if bloque.get("type") == "image_url"]
+    etiquetas_fuente = [
+        bloque["text"] for bloque in contenido
+        if bloque.get("type") == "text" and bloque["text"].startswith("Imagen correspondiente")
+    ]
+
+    assert "Compatibilidad visual" in resultado["traduccion"]
+    assert len(bloques_imagen) == 2
+    assert "data:image/jpeg;base64,Zm90by1wZXJybw==" == bloques_imagen[0]["image_url"]["url"]
+    assert "data:image/png;base64,Zm90by1wbGFudGE=" == bloques_imagen[1]["image_url"]["url"]
+    assert etiquetas_fuente == [
+        "Imagen correspondiente a la fuente 1.",
+        "Imagen correspondiente a la fuente 2."
+    ]
+    assert "no demuestra compatibilidad biológica" in resultado["disclaimer"]
 
 
 def test_disclaimer_presente():

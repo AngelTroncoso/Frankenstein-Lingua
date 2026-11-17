@@ -14,6 +14,10 @@ from datetime import datetime
 # Cargar variables de entorno
 load_dotenv()
 
+MAX_IMAGE_SIZE_BYTES = 10 * 1024 * 1024
+ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png"}
+HERO_IMAGE_PATH = Path(__file__).parent / "assets" / "ecosistema.svg"
+
 # Configuración de la página
 st.set_page_config(
     page_title="Frankenstein Lingua",
@@ -53,20 +57,26 @@ def inicializar_sesion():
 
 def mostrar_header():
     """Muestra el encabezado de la aplicación."""
-    columna_titulo, columna_estado = st.columns([3, 1])
-    with columna_titulo:
-        st.title("Frankenstein Lingua")
-        st.caption("Interpretaciones informadas de señales de animales, plantas y hongos.")
-
     modo = st.session_state.get('provider', 'demo')
-    with columna_estado:
-        with st.container(border=True):
-            st.caption("Modo de ejecución")
+    with st.container(border=True):
+        columna_titulo, columna_imagen = st.columns([1.5, 1])
+        with columna_titulo:
+            st.caption("LABORATORIO INTERESPECIE · CIENCIA + IA")
+            st.title("Frankenstein Lingua")
+            st.write("Un puente visual entre las señales de la naturaleza y la curiosidad humana.")
             if modo == 'demo':
-                st.warning("Demo", icon=":material/science:")
-                st.caption("Las interpretaciones son simuladas.")
+                st.warning(
+                    "Modo Demo · Las interpretaciones son simuladas.",
+                    icon=":material/science:"
+                )
             else:
                 st.success(f"{modo.upper()}", icon=":material/check_circle:")
+        with columna_imagen:
+            st.image(
+                str(HERO_IMAGE_PATH),
+                caption="Señales conectadas entre especies",
+                width=360
+            )
 
 
 def mostrar_resultado(resultado: dict, titulo: str = "Traducción"):
@@ -146,6 +156,11 @@ def tab_frankenstein():
     """Interfaz para modo Frankenstein (combinación)."""
     st.header("Modo Frankenstein", icon=":material/hub:")
     st.write("Combina señales de distintas fuentes en una interpretación integrada.")
+    st.caption(
+        "Opcional: añade una foto por fuente para comparar rasgos visibles. "
+        "El análisis requiere un modelo multimodal; las imágenes se envían al proveedor "
+        "configurado y no se guardan en la aplicación."
+    )
 
     num_fuentes = st.number_input(
         "Fuentes a combinar",
@@ -157,6 +172,7 @@ def tab_frankenstein():
 
     observaciones = []
     archivos_csv = []
+    archivos_imagen = []
 
     for i in range(int(num_fuentes)):
         with st.container(border=True):
@@ -168,12 +184,28 @@ def tab_frankenstein():
                 key=f"obs_{i}"
             )
             observaciones.append(obs)
-            archivo = st.file_uploader(
-                "Lecturas de sensores (opcional)",
-                type=['csv'],
-                key=f"csv_file_{i}"
-            )
-            archivos_csv.append(archivo)
+            columna_sensores, columna_imagen = st.columns(2)
+            with columna_sensores:
+                archivo_csv = st.file_uploader(
+                    "Lecturas de sensores (opcional)",
+                    type=['csv'],
+                    key=f"csv_file_{i}"
+                )
+                archivos_csv.append(archivo_csv)
+            with columna_imagen:
+                archivo_imagen = st.file_uploader(
+                    "Imagen de esta fuente (opcional)",
+                    type=['jpg', 'jpeg', 'png'],
+                    help="JPG o PNG; máximo 10 MB por imagen.",
+                    key=f"image_file_{i}"
+                )
+                archivos_imagen.append(archivo_imagen)
+                if archivo_imagen:
+                    st.image(
+                        archivo_imagen,
+                        caption=f"Vista previa · Fuente {i + 1}",
+                        width=220
+                    )
 
     combinar = st.button(
         "Combinar interpretaciones",
@@ -184,6 +216,29 @@ def tab_frankenstein():
         if not all(observacion.strip() for observacion in observaciones):
             st.error("Completa la observación de cada fuente antes de continuar.")
             return
+
+        if any(archivos_imagen) and st.session_state.agente.demo_mode:
+            st.error(
+                "El modo Demo no puede analizar imágenes. Configura un proveedor de IA "
+                "y un modelo con capacidad visual para usar esta función."
+            )
+            return
+
+        imagenes = []
+        for indice, archivo_imagen in enumerate(archivos_imagen):
+            if not archivo_imagen:
+                imagenes.append(None)
+                continue
+
+            datos_imagen = archivo_imagen.getvalue()
+            if len(datos_imagen) > MAX_IMAGE_SIZE_BYTES:
+                st.error(f"La imagen de la fuente {indice + 1} supera el límite de 10 MB.")
+                return
+            if archivo_imagen.type not in ALLOWED_IMAGE_TYPES:
+                st.error(f"El formato de la imagen de la fuente {indice + 1} no es compatible.")
+                return
+
+            imagenes.append((datos_imagen, archivo_imagen.type))
 
         with tempfile.TemporaryDirectory(prefix="frankenstein_fuentes_") as directorio:
             csv_paths = []
@@ -198,13 +253,19 @@ def tab_frankenstein():
             with st.spinner("Integrando las señales de cada fuente..."):
                 resultado = st.session_state.agente.traducir_frankenstein(
                     observaciones,
-                    csv_paths
+                    csv_paths,
+                    imagenes
                 )
 
         if 'error' in resultado:
             st.error(f"Error: {resultado['error']}")
         else:
-            mostrar_resultado(resultado, "Interpretación integrada")
+            titulo = (
+                "Interpretación integrada y compatibilidad visual"
+                if any(imagenes)
+                else "Interpretación integrada"
+            )
+            mostrar_resultado(resultado, titulo)
             traducciones = resultado.get('traducciones_individuales', [])
             if traducciones:
                 with st.expander("Ver interpretaciones por fuente", icon=":material/search:"):
@@ -298,8 +359,8 @@ def tab_historial():
 def sidebar():
     """Barra lateral con información y configuración."""
     with st.sidebar:
-        st.title("Frankenstein Lingua")
-        st.caption("Interpretación experimental de señales interespecie.")
+        st.markdown("### Laboratorio")
+        st.caption("Frankenstein Lingua · exploración interespecie")
 
         st.subheader("Base de conocimiento")
         try:

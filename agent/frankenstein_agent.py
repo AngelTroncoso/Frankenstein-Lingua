@@ -1,9 +1,10 @@
 """
 Agente Frankenstein Lingua - Orquestador principal
 """
+import base64
 import os
 import logging
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Tuple
 from langchain_openai import ChatOpenAI
 from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -13,6 +14,8 @@ import json
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+ImagenFuente = Optional[Tuple[bytes, str]]
 
 
 class FrankensteinAgent:
@@ -219,13 +222,19 @@ ACCIÓN:
         except Exception as e:
             return f"Error al generar traducción: {str(e)}", "desconocido", 30
     
-    def traducir_frankenstein(self, observaciones: List[str], csv_paths: Optional[List[str]] = None) -> Dict[str, Any]:
+    def traducir_frankenstein(
+        self,
+        observaciones: List[str],
+        csv_paths: Optional[List[str]] = None,
+        imagenes: Optional[List[ImagenFuente]] = None
+    ) -> Dict[str, Any]:
         """
         Modo Frankenstein: combina múltiples fuentes para una traducción conjunta.
         
         Args:
             observaciones: Lista de observaciones de diferentes seres vivos
             csv_paths: Lista opcional de rutas CSV correspondientes
+            imagenes: Lista opcional de pares (bytes, MIME type), uno por fuente
         
         Returns:
             Traducción combinada estilo Frankenstein
@@ -235,6 +244,17 @@ ACCIÓN:
                 'error': 'Se requiere al menos una observación'
             }
         
+        if imagenes is not None and len(imagenes) != len(observaciones):
+            return {
+                'error': 'Debe proporcionarse una entrada de imagen por cada fuente'
+            }
+
+        tiene_imagenes = bool(imagenes and any(imagenes))
+        if tiene_imagenes and self.demo_mode:
+            return {
+                'error': 'El análisis visual requiere un proveedor de IA con capacidad multimodal'
+            }
+
         # Traducir cada observación individualmente
         traducciones = []
         for i, obs in enumerate(observaciones):
@@ -249,7 +269,11 @@ ACCIÓN:
         if self.demo_mode:
             traduccion_combinada = self._generar_frankenstein_demo(traducciones, tipos)
         else:
-            traduccion_combinada = self._generar_frankenstein_llm(traducciones, observaciones)
+            traduccion_combinada = self._generar_frankenstein_llm(
+                traducciones,
+                observaciones,
+                imagenes
+            )
         
         evidencia_combinada = []
         for i, t in enumerate(traducciones):
@@ -263,7 +287,10 @@ ACCIÓN:
             'evidencia': evidencia_combinada,
             'traducciones_individuales': traducciones,
             'modo': "demo" if self.demo_mode else self.provider,
-            'disclaimer': self._generar_disclaimer(frankenstein=True)
+            'disclaimer': self._generar_disclaimer(
+                frankenstein=True,
+                visual=tiene_imagenes
+            )
         }
     
     def _generar_frankenstein_demo(self, traducciones: List[Dict], tipos: List[str]) -> str:
@@ -286,13 +313,32 @@ pero recuerda que todos forman parte del mismo ecosistema.
 💡 **Nota:** Esta es una interpretación creativa y simulada.
 Configura una API key para obtener traducciones más profundas."""
     
-    def _generar_frankenstein_llm(self, traducciones: List[Dict], observaciones: List[str]) -> str:
-        """Genera traducción Frankenstein usando LLM."""
+    def _generar_frankenstein_llm(
+        self,
+        traducciones: List[Dict],
+        observaciones: List[str],
+        imagenes: Optional[List[ImagenFuente]] = None
+    ) -> str:
+        """Genera una interpretación combinada, con análisis visual opcional."""
         resumen = "\n\n".join([
             f"Ser vivo {i+1} ({t['tipo_ser']}):\n{t['traduccion']}"
             for i, t in enumerate(traducciones)
         ])
-        
+
+        instrucciones_visuales = ""
+        if imagenes and any(imagenes):
+            instrucciones_visuales = """
+
+También analiza las imágenes adjuntas, identificadas por número de fuente. Basa tus
+observaciones solo en rasgos claramente visibles; no inventes detalles fuera del encuadre.
+Evalúa la compatibilidad visual aparente como alta, media, baja o no concluyente y explica
+qué señales visibles apoyan esa valoración. No infieras compatibilidad biológica, genética,
+de salud ni de convivencia solo por la apariencia.
+
+Incluye una sección "### Compatibilidad visual" con la valoración, evidencias por fuente
+y limitaciones. Distingue claramente los hechos visibles de las hipótesis.
+"""
+
         prompt = f"""Como el Dr. Frankenstein Lingua, has "cosido" señales de múltiples seres vivos diferentes.
 
 Observaciones originales:
@@ -309,16 +355,31 @@ Usa el formato:
 [tu traducción combinada]
 
 ACCIÓN INTEGRADA:
-[acción que considere todas las fuentes]"""
+[acción que considere todas las fuentes]{instrucciones_visuales}"""
 
-        try:
-            messages = [HumanMessage(content=prompt)]
-            respuesta = self.llm.invoke(messages)
-            return respuesta.content
-        except Exception as e:
-            return f"Error al generar traducción Frankenstein: {str(e)}"
+        contenido = prompt
+        if imagenes and any(imagenes):
+            contenido = [{"type": "text", "text": prompt}]
+            for indice, imagen in enumerate(imagenes):
+                if imagen is None:
+                    continue
+                datos_imagen, tipo_mime = imagen
+                imagen_base64 = base64.b64encode(datos_imagen).decode("ascii")
+                contenido.append({
+                    "type": "text",
+                    "text": f"Imagen correspondiente a la fuente {indice + 1}."
+                })
+                contenido.append({
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:{tipo_mime};base64,{imagen_base64}"
+                    }
+                })
+
+        respuesta = self.llm.invoke([HumanMessage(content=contenido)])
+        return respuesta.content
     
-    def _generar_disclaimer(self, frankenstein: bool = False) -> str:
+    def _generar_disclaimer(self, frankenstein: bool = False, visual: bool = False) -> str:
         """Genera el disclaimer requerido."""
         base = ("⚠️ **DISCLAIMER:** Esta es una interpretación creativa con fines educativos y de demostración. "
                 "NO representa una traducción científica literal de comunicación animal/vegetal/fúngica. "
@@ -328,5 +389,9 @@ ACCIÓN INTEGRADA:
         if frankenstein:
             base += (" El modo Frankenstein combina señales de diferentes especies de forma experimental "
                     "y no representa ningún fenómeno natural conocido.")
+
+        if visual:
+            base += (" La compatibilidad visual es una estimación basada solo en las imágenes aportadas; "
+                    "no demuestra compatibilidad biológica ni sustituye una evaluación profesional.")
         
         return base

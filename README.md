@@ -43,6 +43,8 @@ Este proyecto es un **prototipo educativo y creativo** que "cose" fragmentos de 
    - Combina señales de 2-4 seres vivos diferentes
    - Genera una traducción integrada única
    - Muestra traducciones individuales y combinadas
+   - Permite comparar una imagen por fuente y obtener una estimación de compatibilidad visual
+   - El análisis visual requiere un modelo multimodal; las imágenes se envían al proveedor configurado y no se guardan en la app
 
 3. **📊 Análisis de Sensores**
    - Lectura de CSV con datos de humedad, luz y temperatura
@@ -70,6 +72,8 @@ Este proyecto es un **prototipo educativo y creativo** que "cose" fragmentos de 
 ```
 frankenstein-lingua/
 ├── app.py                    # Interfaz Streamlit (UI principal)
+├── assets/
+│   └── ecosistema.svg         # Ilustración original de portada
 ├── agent/
 │   ├── __init__.py
 │   ├── frankenstein_agent.py # Orquestador del agente con LangGraph
@@ -166,6 +170,8 @@ MISTRAL_MODEL=mistral-small-latest
 # Opción 3: Modo Demo (sin API key)
 # No configurar nada, funciona con respuestas simuladas
 ```
+
+Para analizar imágenes en el Modo Frankenstein, configura OpenAI o Mistral con un modelo que admita visión. El modo Demo solo procesa texto. La comparación visual es orientativa y no determina compatibilidad biológica.
 
 ### Paso 5: Ejecutar la aplicación
 

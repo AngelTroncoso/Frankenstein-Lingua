@@ -1,11 +1,37 @@
 [theme]
 base = "light"
-primaryColor = "#1B6E5A"
-backgroundColor = "#F7F9F8"
-secondaryBackgroundColor = "#FFFFFF"
-textColor = "#172521"
 font = "sans-serif"
-borderColor = "#DCE6E1"
 showWidgetBorder = true
-baseRadius = "medium"
-buttonRadius = "medium"
+baseRadius = "large"
+buttonRadius = "large"
+
+[theme.light]
+primaryColor = "#2F684E"
+backgroundColor = "#F5F3EA"
+secondaryBackgroundColor = "#FEFCF6"
+textColor = "#20352A"
+borderColor = "#DBE2D6"
+chartCategoricalColors = ["#39705A", "#B37A4B", "#A5B66C", "#6B7999", "#C16F5C"]
+
+[theme.dark]
+primaryColor = "#2F7054"
+backgroundColor = "#131E19"
+secondaryBackgroundColor = "#1C2A22"
+textColor = "#EAF0E6"
+borderColor = "#37473B"
+chartCategoricalColors = ["#74B995", "#D5A36F", "#C3D486", "#9AA9D4", "#E88E7D"]
+
+[theme.light.sidebar]
+backgroundColor = "#EBEFE5"
+secondaryBackgroundColor = "#E2E9DD"
+textColor = "#233C30"
+borderColor = "#D3DCD1"
+
+[theme.dark.sidebar]
+backgroundColor = "#101A15"
+secondaryBackgroundColor = "#1C2A22"
+textColor = "#EAF0E6"
+borderColor = "#37473B"
+
+[server]
+maxUploadSize = 10
