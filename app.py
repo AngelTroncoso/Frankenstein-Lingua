@@ -4,10 +4,10 @@ Agente de traducción de comunicación entre especies
 """
 import streamlit as st
 import os
+import tempfile
 from pathlib import Path
 from dotenv import load_dotenv
 from agent.frankenstein_agent import FrankensteinAgent
-import json
 import pandas as pd
 from datetime import datetime
 
@@ -21,91 +21,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# CSS personalizado mejorado
-st.markdown("""
-<style>
-    /* Animación de entrada */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .main-header {
-        font-size: 3rem;
-        color: #2E7D32;
-        text-align: center;
-        margin-bottom: 0;
-        animation: fadeIn 0.8s ease-out;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .subtitle {
-        text-align: center;
-        color: #666;
-        font-style: italic;
-        margin-bottom: 2rem;
-        animation: fadeIn 1s ease-out;
-    }
-    
-    .stAlert {
-        margin-top: 1rem;
-        animation: fadeIn 0.5s ease-out;
-    }
-    
-    .traduccion-box {
-        background: linear-gradient(135deg, #f0f7f0 0%, #e8f5e9 100%);
-        padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 5px solid #2E7D32;
-        margin: 1rem 0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        animation: fadeIn 0.6s ease-out;
-        transition: transform 0.2s;
-    }
-    
-    .traduccion-box:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .disclaimer-box {
-        background-color: #fff3cd;
-        padding: 1rem;
-        border-radius: 5px;
-        border-left: 4px solid #ffc107;
-        margin: 1rem 0;
-        font-size: 0.9rem;
-        animation: fadeIn 0.7s ease-out;
-    }
-    
-    /* Mejora de botones */
-    .stButton>button {
-        transition: all 0.3s ease;
-    }
-    
-    .stButton>button:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    
-    /* Tabs mejorados */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 5px 5px 0 0;
-        transition: all 0.2s;
-    }
-    
-    /* Spinner personalizado */
-    .stSpinner > div {
-        border-color: #2E7D32 !important;
-    }
-</style>
-""", unsafe_allow_html=True)
-
 
 def inicializar_sesion():
     """Inicializa variables de sesión."""
@@ -138,49 +53,43 @@ def inicializar_sesion():
 
 def mostrar_header():
     """Muestra el encabezado de la aplicación."""
-    st.markdown('<h1 class="main-header">⚡ Frankenstein Lingua</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle">Agente de traducción universal entre especies</p>', unsafe_allow_html=True)
-    
-    # Mostrar modo de operación
+    columna_titulo, columna_estado = st.columns([3, 1])
+    with columna_titulo:
+        st.title("Frankenstein Lingua")
+        st.caption("Interpretaciones informadas de señales de animales, plantas y hongos.")
+
     modo = st.session_state.get('provider', 'demo')
-    if modo == 'demo':
-        st.warning("🧪 **Modo Demo Activo** - Las traducciones son simuladas. Configura una API key en `.env` para usar IA real.", icon="⚠️")
-    else:
-        st.success(f"✅ Conectado a {modo.upper()}", icon="🤖")
+    with columna_estado:
+        with st.container(border=True):
+            st.caption("Modo de ejecución")
+            if modo == 'demo':
+                st.warning("Demo", icon=":material/science:")
+                st.caption("Las interpretaciones son simuladas.")
+            else:
+                st.success(f"{modo.upper()}", icon=":material/check_circle:")
 
 
 def mostrar_resultado(resultado: dict, titulo: str = "Traducción"):
     """Muestra el resultado de una traducción."""
-    st.markdown(f"### {titulo}")
-    
-    col1, col2 = st.columns([3, 1])
-    
-    with col1:
-        st.markdown(f"**Tipo de ser vivo:** {resultado['tipo_ser'].title()}")
-    
-    with col2:
-        # Medidor de confianza con color
-        confianza = resultado['confianza']
-        color = "#4CAF50" if confianza >= 70 else "#FFC107" if confianza >= 40 else "#F44336"
-        st.markdown(f"**Confianza:** <span style='color:{color};font-weight:bold'>{confianza}%</span>", unsafe_allow_html=True)
-    
-    # Traducción
-    st.markdown('<div class="traduccion-box">', unsafe_allow_html=True)
-    st.markdown(resultado['traduccion'])
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Evidencia
+    confianza = resultado['confianza']
+    with st.container(border=True):
+        st.subheader(titulo)
+        columna_tipo, columna_confianza = st.columns([3, 1])
+        with columna_tipo:
+            st.caption("Ser vivo identificado")
+            st.write(resultado['tipo_ser'].title())
+        with columna_confianza:
+            st.metric("Confianza estimada", f"{confianza}%")
+        st.progress(confianza / 100)
+        st.markdown(resultado['traduccion'])
+
     if resultado.get('evidencia'):
-        with st.expander("📚 Ver evidencia científica"):
+        with st.expander("Consultar evidencia científica", icon=":material/science:"):
             for ev in resultado['evidencia']:
                 st.markdown(f"- {ev}")
-    
-    # Disclaimer
-    st.markdown('<div class="disclaimer-box">', unsafe_allow_html=True)
-    st.markdown(resultado['disclaimer'])
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Agregar al historial
+
+    st.warning(resultado['disclaimer'], icon=":material/info:")
+
     st.session_state.historial.append({
         'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'tipo': resultado['tipo_ser'],
@@ -191,219 +100,228 @@ def mostrar_resultado(resultado: dict, titulo: str = "Traducción"):
 
 def tab_simple():
     """Interfaz para traducción simple."""
-    st.header("🔬 Traducción Simple")
-    st.write("Describe la observación de un ser vivo y obtén su traducción.")
-    
-    observacion = st.text_area(
-        "Describe lo que observaste:",
-        placeholder="Ejemplo: Mi perro está ladrando de forma aguda y repetida mientras mira hacia la puerta",
-        height=100
-    )
-    
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        usar_csv = st.checkbox("📊 Incluir datos de sensores (para plantas)")
-    
-    csv_path = None
-    if usar_csv:
-        with col2:
-            archivo_csv = st.file_uploader("Sube tu CSV de sensores", type=['csv'])
-            if archivo_csv:
-                # Guardar temporalmente
-                csv_path = f"temp_sensores_{datetime.now().timestamp()}.csv"
-                with open(csv_path, 'wb') as f:
-                    f.write(archivo_csv.getbuffer())
-    
-    if st.button("🌍 Traducir", type="primary", use_container_width=True):
-        if not observacion:
-            st.error("Por favor, describe una observación.")
+    st.header("Traducción simple", icon=":material/biotech:")
+    st.write("Describe una señal observada. Puedes añadir lecturas de sensores para complementar el análisis de una planta.")
+
+    with st.container(border=True):
+        with st.form("traduccion_simple"):
+            observacion = st.text_area(
+                "¿Qué observaste?",
+                placeholder="Ejemplo: Mi perro ladra de forma aguda y repetida mientras mira hacia la puerta.",
+                height=130
+            )
+            archivo_csv = st.file_uploader(
+                "Lecturas de sensores (opcional)",
+                type=['csv'],
+                help="Añade un CSV con datos ambientales para complementar la interpretación."
+            )
+            traducir = st.form_submit_button(
+                "Generar interpretación",
+                type="primary",
+                width="stretch"
+            )
+
+    if traducir:
+        if not observacion.strip():
+            st.error("Describe una observación antes de continuar.")
             return
-        
-        with st.spinner("🧬 Cosiendo fragmentos de conocimiento..."):
-            resultado = st.session_state.agente.traducir(observacion, csv_path)
-            
-            if 'error' in resultado:
-                st.error(f"Error: {resultado['error']}")
-            else:
-                mostrar_resultado(resultado)
-        
-        # Limpiar archivo temporal
-        if csv_path and os.path.exists(csv_path):
-            os.remove(csv_path)
+
+        if archivo_csv:
+            with tempfile.TemporaryDirectory(prefix="frankenstein_sensores_") as directorio:
+                csv_path = Path(directorio) / "sensores.csv"
+                csv_path.write_bytes(archivo_csv.getvalue())
+                with st.spinner("Analizando la observación y los datos..."):
+                    resultado = st.session_state.agente.traducir(observacion, str(csv_path))
+        else:
+            with st.spinner("Analizando la observación..."):
+                resultado = st.session_state.agente.traducir(observacion)
+
+        if 'error' in resultado:
+            st.error(f"Error: {resultado['error']}")
+        else:
+            mostrar_resultado(resultado)
 
 
 def tab_frankenstein():
     """Interfaz para modo Frankenstein (combinación)."""
-    st.header("⚡ Modo Frankenstein")
-    st.write("Combina señales de diferentes seres vivos para una traducción integrada.")
-    
-    num_fuentes = st.number_input("¿Cuántas fuentes quieres combinar?", min_value=2, max_value=4, value=2)
-    
+    st.header("Modo Frankenstein", icon=":material/hub:")
+    st.write("Combina señales de distintas fuentes en una interpretación integrada.")
+
+    num_fuentes = st.number_input(
+        "Fuentes a combinar",
+        min_value=2,
+        max_value=4,
+        value=2,
+        help="Elige entre dos y cuatro observaciones."
+    )
+
     observaciones = []
-    csv_paths = []
-    
+    archivos_csv = []
+
     for i in range(int(num_fuentes)):
-        st.markdown(f"#### Fuente {i+1}")
-        col1, col2 = st.columns([2, 1])
-        
-        with col1:
+        with st.container(border=True):
+            st.subheader(f"Fuente {i + 1}")
             obs = st.text_area(
-                f"Observación {i+1}:",
-                placeholder=f"Ejemplo: Un cactus con arrugas en su superficie",
-                height=80,
+                "Describe la señal observada",
+                placeholder="Ejemplo: Un cactus presenta arrugas en su superficie.",
+                height=100,
                 key=f"obs_{i}"
             )
             observaciones.append(obs)
-        
-        with col2:
-            usar_csv_i = st.checkbox(f"CSV #{i+1}", key=f"csv_check_{i}")
-            if usar_csv_i:
-                archivo = st.file_uploader(f"CSV #{i+1}", type=['csv'], key=f"csv_file_{i}")
+            archivo = st.file_uploader(
+                "Lecturas de sensores (opcional)",
+                type=['csv'],
+                key=f"csv_file_{i}"
+            )
+            archivos_csv.append(archivo)
+
+    combinar = st.button(
+        "Combinar interpretaciones",
+        type="primary",
+        width="stretch"
+    )
+    if combinar:
+        if not all(observacion.strip() for observacion in observaciones):
+            st.error("Completa la observación de cada fuente antes de continuar.")
+            return
+
+        with tempfile.TemporaryDirectory(prefix="frankenstein_fuentes_") as directorio:
+            csv_paths = []
+            for i, archivo in enumerate(archivos_csv):
                 if archivo:
-                    csv_path_i = f"temp_frankenstein_{i}_{datetime.now().timestamp()}.csv"
-                    with open(csv_path_i, 'wb') as f:
-                        f.write(archivo.getbuffer())
-                    csv_paths.append(csv_path_i)
+                    csv_path = Path(directorio) / f"sensores_{i + 1}.csv"
+                    csv_path.write_bytes(archivo.getvalue())
+                    csv_paths.append(str(csv_path))
                 else:
                     csv_paths.append(None)
-            else:
-                csv_paths.append(None)
-    
-    if st.button("⚡ ¡Coser Traducciones!", type="primary", use_container_width=True):
-        if not all(observaciones):
-            st.error("Por favor, completa todas las observaciones.")
-            return
-        
-        with st.spinner("⚡ Cosiendo las partes del monstruo..."):
-            resultado = st.session_state.agente.traducir_frankenstein(observaciones, csv_paths)
-            
-            if 'error' in resultado:
-                st.error(f"Error: {resultado['error']}")
-            else:
-                mostrar_resultado(resultado, "🧟 Traducción Frankenstein")
-                
-                # Mostrar traducciones individuales
-                with st.expander("🔍 Ver traducciones individuales"):
-                    for i, trad in enumerate(resultado.get('traducciones_individuales', [])):
-                        st.markdown(f"**Fuente {i+1} ({trad['tipo_ser']})**")
-                        st.markdown(trad['traduccion'][:200] + "...")
-                        st.markdown("---")
-        
-        # Limpiar archivos temporales
-        for csv_p in csv_paths:
-            if csv_p and os.path.exists(csv_p):
-                os.remove(csv_p)
+
+            with st.spinner("Integrando las señales de cada fuente..."):
+                resultado = st.session_state.agente.traducir_frankenstein(
+                    observaciones,
+                    csv_paths
+                )
+
+        if 'error' in resultado:
+            st.error(f"Error: {resultado['error']}")
+        else:
+            mostrar_resultado(resultado, "Interpretación integrada")
+            traducciones = resultado.get('traducciones_individuales', [])
+            if traducciones:
+                with st.expander("Ver interpretaciones por fuente", icon=":material/search:"):
+                    for i, traduccion in enumerate(traducciones):
+                        st.markdown(f"**Fuente {i + 1} · {traduccion['tipo_ser']}**")
+                        st.markdown(traduccion['traduccion'])
 
 
 def tab_ejemplos():
     """Guion de demo con ejemplos listos."""
-    st.header("🎬 Guion de Demo")
-    st.write("Ejemplos listos para probar el sistema en 2 minutos.")
-    
-    st.markdown("### Ejemplo 1: Animal (Perro) 🐕")
-    if st.button("Probar Ejemplo 1", key="ej1"):
-        obs = "Mi perro está ladrando de forma aguda y repetida mientras mira hacia la puerta y mueve la cola"
-        with st.spinner("Traduciendo..."):
-            resultado = st.session_state.agente.traducir(obs)
-            mostrar_resultado(resultado)
-    
-    st.markdown("---")
-    
-    st.markdown("### Ejemplo 2: Planta con Sensores 🌱")
-    st.write("Usa el archivo `data/sensores_ejemplo.csv` incluido en el proyecto.")
-    if st.button("Probar Ejemplo 2", key="ej2"):
-        obs = "Mi planta de tomate tiene las hojas enrolladas hacia arriba"
-        csv_ejemplo = "data/sensores_ejemplo.csv"
-        if os.path.exists(csv_ejemplo):
-            with st.spinner("Traduciendo..."):
-                resultado = st.session_state.agente.traducir(obs, csv_ejemplo)
-                mostrar_resultado(resultado)
-        else:
-            st.error("Archivo de ejemplo no encontrado. Asegúrate de que data/sensores_ejemplo.csv existe.")
-    
-    st.markdown("---")
-    
-    st.markdown("### Ejemplo 3: Modo Frankenstein ⚡")
-    if st.button("Probar Ejemplo 3", key="ej3"):
-        obs1 = "Una abeja está realizando una danza en forma de 8"
-        obs2 = "Un cactus presenta arrugas en su superficie"
-        with st.spinner("Cosiendo traducciones..."):
-            resultado = st.session_state.agente.traducir_frankenstein([obs1, obs2])
-            mostrar_resultado(resultado, "⚡ Traducción Frankenstein")
+    st.header("Ejemplos guiados", icon=":material/play_circle:")
+    st.write("Explora tres escenarios de muestra para conocer las distintas funciones.")
+
+    columna_animal, columna_planta, columna_integrada = st.columns(3)
+
+    with columna_animal:
+        with st.container(border=True):
+            st.subheader("Señal animal")
+            st.caption("Interpretación de una conducta observada.")
+            if st.button("Probar ejemplo", key="ej1", width="stretch"):
+                observacion = "Mi perro está ladrando de forma aguda y repetida mientras mira hacia la puerta y mueve la cola"
+                with st.spinner("Analizando la observación..."):
+                    resultado = st.session_state.agente.traducir(observacion)
+                if 'error' in resultado:
+                    st.error(f"Error: {resultado['error']}")
+                else:
+                    mostrar_resultado(resultado)
+
+    with columna_planta:
+        with st.container(border=True):
+            st.subheader("Planta y sensores")
+            st.caption("Usa el CSV de muestra incluido en el proyecto.")
+            if st.button("Probar ejemplo", key="ej2", width="stretch"):
+                observacion = "Mi planta de tomate tiene las hojas enrolladas hacia arriba"
+                csv_ejemplo = Path("data") / "sensores_ejemplo.csv"
+                if csv_ejemplo.exists():
+                    with st.spinner("Analizando la observación y los sensores..."):
+                        resultado = st.session_state.agente.traducir(
+                            observacion,
+                            str(csv_ejemplo)
+                        )
+                    if 'error' in resultado:
+                        st.error(f"Error: {resultado['error']}")
+                    else:
+                        mostrar_resultado(resultado)
+                else:
+                    st.error("No se encontró data/sensores_ejemplo.csv.")
+
+    with columna_integrada:
+        with st.container(border=True):
+            st.subheader("Modo Frankenstein")
+            st.caption("Integra señales de especies diferentes.")
+            if st.button("Probar ejemplo", key="ej3", width="stretch"):
+                observaciones = [
+                    "Una abeja está realizando una danza en forma de 8",
+                    "Un cactus presenta arrugas en su superficie"
+                ]
+                with st.spinner("Integrando las señales..."):
+                    resultado = st.session_state.agente.traducir_frankenstein(observaciones)
+                if 'error' in resultado:
+                    st.error(f"Error: {resultado['error']}")
+                else:
+                    mostrar_resultado(resultado, "Interpretación integrada")
 
 
 def tab_historial():
     """Muestra el historial de traducciones."""
-    st.header("📜 Historial de Traducciones")
-    
+    st.header("Historial de traducciones", icon=":material/history:")
+
     if not st.session_state.historial:
-        st.info("Aún no hay traducciones en esta sesión.")
+        st.info("Las interpretaciones que generes durante esta sesión aparecerán aquí.")
         return
-    
-    # Mostrar historial
-    df_historial = pd.DataFrame(st.session_state.historial)
-    st.dataframe(df_historial, use_container_width=True)
-    
-    # Opción de exportar
-    col1, col2 = st.columns([3, 1])
-    with col2:
-        if st.button("📥 Exportar a CSV"):
-            csv = df_historial.to_csv(index=False)
-            st.download_button(
-                label="Descargar CSV",
-                data=csv,
-                file_name=f"frankenstein_lingua_historial_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                mime="text/csv"
-            )
+
+    df_historial = pd.DataFrame(st.session_state.historial).rename(columns={
+        "timestamp": "Fecha y hora",
+        "tipo": "Ser vivo",
+        "confianza": "Confianza (%)",
+        "traduccion": "Interpretación"
+    })
+    with st.container(border=True):
+        st.dataframe(df_historial, width="stretch", hide_index=True)
+        st.download_button(
+            label="Descargar historial CSV",
+            data=df_historial.to_csv(index=False),
+            file_name=f"frankenstein_lingua_historial_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+            mime="text/csv",
+            icon=":material/download:"
+        )
 
 
 def sidebar():
     """Barra lateral con información y configuración."""
     with st.sidebar:
-        st.image("https://em-content.zobj.net/thumbs/240/google/350/brain_1f9e0.png", width=100)
-        
-        st.markdown("### ⚡ Frankenstein Lingua")
-        st.markdown("**Versión:** 1.0.0 MVP")
-        
-        st.markdown("---")
-        
-        st.markdown("### 🎯 Cómo usar")
-        st.markdown("""
-        1. **Traducción Simple:** Describe una señal de un ser vivo
-        2. **Modo Frankenstein:** Combina múltiples fuentes
-        3. **Ejemplos Demo:** Prueba los casos predefinidos
-        """)
-        
-        st.markdown("---")
-        
-        st.markdown("### 🔬 Base de Conocimiento")
+        st.title("Frankenstein Lingua")
+        st.caption("Interpretación experimental de señales interespecie.")
+
+        st.subheader("Base de conocimiento")
         try:
             from agent.tools import cargar_patrones
             num_patrones = len(cargar_patrones())
-            st.info(f"📚 {num_patrones} patrones cargados")
-        except Exception:
-            st.info("📚 Base de conocimiento activa")
-        
-        st.markdown("---")
-        
-        st.markdown("### ⚙️ Configuración")
+            st.caption(f"{num_patrones} patrones científicos disponibles")
+        except Exception as error:
+            st.warning(f"No se pudo cargar la base de patrones: {error}")
+
+        st.subheader("Configuración")
         modo_actual = st.session_state.get('provider', 'demo')
-        st.markdown(f"**Modo:** {modo_actual.upper()}")
-        
+        st.markdown(f"**Proveedor:** {modo_actual.upper()}")
+
         if modo_actual == 'demo':
-            st.warning("Configura `.env` para usar IA real")
-        
-        st.markdown("---")
-        
-        st.markdown("### ℹ️ Acerca de")
-        st.markdown("""
-        Sistema experimental que interpreta señales de comunicación de animales, 
-        plantas y hongos usando IA y conocimiento científico curado.
-        
-        **Disclaimer:** Este es un proyecto educativo y creativo. 
-        No representa traducciones literales científicamente validadas.
-        """)
+            st.caption("Configura una API key en `.env` para habilitar un proveedor de IA.")
+
+        with st.expander("Acerca de este proyecto"):
+            st.write(
+                "Herramienta educativa y creativa. Sus interpretaciones no son "
+                "traducciones literales ni sustituyen el asesoramiento profesional."
+            )
+        st.caption("Versión 1.0.0 MVP")
 
 
 def main():
@@ -415,10 +333,10 @@ def main():
     
     # Tabs principales
     tab1, tab2, tab3, tab4 = st.tabs([
-        "🔬 Traducción Simple",
-        "⚡ Modo Frankenstein",
-        "🎬 Guion Demo",
-        "📜 Historial"
+        ":material/biotech: Traducción simple",
+        ":material/hub: Modo Frankenstein",
+        ":material/play_circle: Ejemplos",
+        ":material/history: Historial"
     ])
     
     with tab1:

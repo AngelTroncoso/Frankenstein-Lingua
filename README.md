@@ -3,7 +3,7 @@
 **Agente de lenguaje universal entre especies**
 
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)](https://streamlit.io)
+[![Streamlit](https://img.shields.io/badge/streamlit-1.49+-red.svg)](https://streamlit.io)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-11%2F11%20passing-brightgreen.svg)](tests/)
 [![Patrones](https://img.shields.io/badge/patrones-25-blue.svg)](data/patrones.json)
@@ -12,7 +12,7 @@
 Un sistema experimental que interpreta señales de comunicación de animales, plantas y hongos, traduciéndolas a lenguaje humano comprensible mediante IA y conocimiento científico curado.
 
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
-![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)
+![Streamlit](https://img.shields.io/badge/streamlit-1.49+-red.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ---

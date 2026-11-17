@@ -111,7 +111,7 @@ tests/test_tools.py::test_buscar_patrones_sin_coincidencias PASSED [100%]
 ## 🏗️ Arquitectura Técnica
 
 ### Stack Tecnológico
-- **Frontend:** Streamlit 1.28+
+- **Frontend:** Streamlit 1.49+
 - **Backend:** Python 3.11+
 - **Agente:** LangChain + tool calling directo
 - **LLMs soportados:** OpenAI (GPT-4o-mini) y Mistral (mistral-small)
