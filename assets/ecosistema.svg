@@ -1,45 +1,248 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" fill="none">
   <defs>
-    <linearGradient id="background" x1="30" y1="20" x2="730" y2="410" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#234638"/>
-      <stop offset="1" stop-color="#142D26"/>
+    <!-- Gradiente de fondo espacial profundo -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="760" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="50%" stop-color="#0c1829"/>
+      <stop offset="100%" stop-color="#060b14"/>
     </linearGradient>
-    <linearGradient id="leaf" x1="290" y1="110" x2="445" y2="275" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#D2E0A1"/>
-      <stop offset="1" stop-color="#83AD6E"/>
+
+    <!-- Gradiente Neón Cyan para Cetáceos y Bioacústica -->
+    <linearGradient id="cyanNeon" x1="100" y1="80" x2="350" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="60%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#0284c7"/>
     </linearGradient>
-    <linearGradient id="wing" x1="128" y1="137" x2="267" y2="236" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F0C27B"/>
-      <stop offset="1" stop-color="#D98358"/>
+
+    <!-- Gradiente Esmeralda / Bio para Primates -->
+    <linearGradient id="emeraldNeon" x1="380" y1="60" x2="520" y2="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
     </linearGradient>
-    <linearGradient id="cap" x1="515" y1="226" x2="650" y2="307" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#E8B875"/>
-      <stop offset="1" stop-color="#C87655"/>
+
+    <!-- Gradiente Dorado / Ambar para Elefantes -->
+    <linearGradient id="amberGlow" x1="120" y1="240" x2="320" y2="390" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
     </linearGradient>
+
+    <!-- Gradiente Violeta Neón para Córvidos / Aves -->
+    <linearGradient id="violetNeon" x1="480" y1="120" x2="680" y2="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+
+    <!-- Filtro de Resplandor Neón -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
   </defs>
-  <rect width="760" height="420" rx="32" fill="url(#background)"/>
-  <circle cx="615" cy="84" r="44" fill="#D9C98A" fill-opacity=".12"/>
-  <circle cx="615" cy="84" r="27" fill="#D9C98A" fill-opacity=".2"/>
-  <path d="M66 303C176 267 234 334 334 297c100-36 162-3 249-46 43-21 77-41 111-65" stroke="#A3BD8C" stroke-opacity=".2" stroke-width="2" stroke-dasharray="5 9"/>
-  <path d="M142 191c81 0 112 56 210 56 86 0 130-45 229-45" stroke="#D8C88C" stroke-opacity=".32" stroke-width="1.5" stroke-dasharray="3 8"/>
-  <path d="M364 293c-3-47-4-95 4-151" stroke="#C1D79A" stroke-width="5" stroke-linecap="round"/>
-  <path d="M367 223c-54 1-89-25-99-75 48-6 89 17 99 75Z" fill="url(#leaf)"/>
-  <path d="M368 205c12-48 48-73 99-66-10 48-43 72-99 66Z" fill="#99BD7E"/>
-  <path d="M369 256c-42 0-67-18-78-52 37-3 67 15 78 52Z" fill="#7FA76F"/>
-  <path d="M367 223 280 153m88 52 87-61m-87 112-66-52" stroke="#E8E7C7" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
-  <path d="M170 166c-22-35-56-43-80-21 5 31 30 55 69 60-15 24-9 49 14 62 30-10 46-37 39-73 29 9 52-1 63-28-18-25-49-33-83-19-1-30-19-48-48-48-21 24-22 50-2 77Z" fill="url(#wing)" fill-opacity=".92"/>
-  <path d="M190 179c-6-21-3-40 8-59m-8 59c18-14 40-20 66-17m-66 17c-19-5-39-3-58 7m58-7c-8 19-9 36-4 52" stroke="#FFF1CF" stroke-opacity=".76" stroke-width="2" stroke-linecap="round"/>
-  <ellipse cx="191" cy="181" rx="6" ry="25" transform="rotate(22 191 181)" fill="#F6E8C2"/>
-  <path d="M565 294c-12 20-11 38-1 56h47c10-20 9-38-2-56h-44Z" fill="#E5D7B5"/>
-  <path d="M534 266c7-37 34-56 68-56s61 19 68 56c-35 22-101 22-136 0Z" fill="url(#cap)"/>
-  <path d="M552 263c31 14 68 14 100 0m-71 10v69m42-69v69" stroke="#FFF0CF" stroke-opacity=".62" stroke-width="2"/>
-  <path d="M575 242c7-7 14-7 21 0m27-10c6-6 13-6 19 0" stroke="#F6E5C5" stroke-width="4" stroke-linecap="round"/>
-  <path d="M331 322c18-21 38-21 57 0m-87 21c16-16 32-16 48 0m38-2c20-22 40-22 60 0" stroke="#82A77B" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="102" cy="88" r="4" fill="#E5C27D"/>
-  <circle cx="282" cy="84" r="3" fill="#C5D79A"/>
-  <circle cx="491" cy="114" r="4" fill="#E5C27D"/>
-  <circle cx="689" cy="166" r="3" fill="#C5D79A"/>
-  <circle cx="105" cy="276" r="3" fill="#C5D79A"/>
-  <circle cx="674" cy="336" r="4" fill="#E5C27D"/>
-  <path d="M102 88 190 156m92-72 74 77m135-63 114-14m78 82 30 6M105 276l84-95m473 155 12-170" stroke="#D5DFB0" stroke-opacity=".25" stroke-width="1.5"/>
+
+  <!-- Fondo redondeado -->
+  <rect width="760" height="420" rx="28" fill="url(#bgGrad)"/>
+  <rect width="758" height="418" x="1" y="1" rx="27" stroke="rgba(0, 242, 254, 0.25)" stroke-width="1.5"/>
+
+  <!-- Grilla sutil cibernética / bioacústica de fondo -->
+  <g stroke="rgba(56, 189, 248, 0.05)" stroke-width="1">
+    <line x1="60" y1="0" x2="60" y2="420"/>
+    <line x1="160" y1="0" x2="160" y2="420"/>
+    <line x1="260" y1="0" x2="260" y2="420"/>
+    <line x1="360" y1="0" x2="360" y2="420"/>
+    <line x1="460" y1="0" x2="460" y2="420"/>
+    <line x1="560" y1="0" x2="560" y2="420"/>
+    <line x1="660" y1="0" x2="660" y2="420"/>
+    <line x1="0" y1="70" x2="760" y2="70"/>
+    <line x1="0" y1="140" x2="760" y2="140"/>
+    <line x1="0" y1="210" x2="760" y2="210"/>
+    <line x1="0" y1="280" x2="760" y2="280"/>
+    <line x1="0" y1="350" x2="760" y2="350"/>
+  </g>
+
+  <!-- Ondas bioacústicas concéntricas (Sonar y Ecos) -->
+  <g stroke="#00f2fe" stroke-opacity="0.18" fill="none">
+    <circle cx="210" cy="150" r="50" stroke-width="1.5" stroke-dasharray="4 6"/>
+    <circle cx="210" cy="150" r="85" stroke-width="1" stroke-dasharray="6 8"/>
+    <circle cx="210" cy="150" r="130" stroke-width="0.75" stroke-dasharray="8 12"/>
+    <circle cx="210" cy="150" r="180" stroke-width="0.5"/>
+  </g>
+
+  <!-- Ondas infrasónicas sísmicas terrestres (Elefante) -->
+  <g stroke="#fbbf24" stroke-opacity="0.22" stroke-width="1.5" fill="none">
+    <path d="M 60 375 Q 120 360, 180 375 T 300 375 T 420 375 T 540 375 T 660 375" stroke-dasharray="5 5"/>
+    <path d="M 40 390 Q 110 380, 180 390 T 320 390 T 460 390 T 600 390 T 720 390"/>
+  </g>
+
+  <!-- LÍNEAS DE INTERCONEXIÓN NEURAL ENTRE ESPECIES -->
+  <g stroke="rgba(0, 242, 254, 0.4)" stroke-width="1.5" stroke-dasharray="3 4">
+    <line x1="210" y1="150" x2="415" y2="120"/> <!-- Cetáceo a Primate -->
+    <line x1="415" y1="120" x2="570" y2="165"/> <!-- Primate a Cuervo -->
+    <line x1="210" y1="150" x2="225" y2="295"/> <!-- Cetáceo a Elefante -->
+    <line x1="225" y1="295" x2="570" y2="165"/> <!-- Elefante a Cuervo -->
+    <line x1="225" y1="295" x2="415" y2="120"/> <!-- Elefante a Primate -->
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 1. CETÁCEO (Delfín / Cachalote estilizado) -->
+  <!-- ========================================== -->
+  <g id="cetaceo" filter="url(#softGlow)">
+    <!-- Silueta elegante de delfín / cetáceo en arco ascendente -->
+    <path d="M 110 185 
+             C 130 145, 175 115, 230 125 
+             C 285 135, 305 170, 290 195 
+             C 275 220, 245 205, 215 195
+             C 185 185, 145 205, 110 185 Z" 
+          fill="url(#cyanNeon)" fill-opacity="0.88"/>
+    
+    <!-- Rostro / Melón acústico prominente -->
+    <path d="M 230 125 C 255 128, 275 142, 285 160 C 270 162, 250 152, 230 125 Z" fill="#e0f2fe" fill-opacity="0.95"/>
+    
+    <!-- Aleta Dorsal -->
+    <path d="M 185 120 C 190 95, 205 85, 215 92 C 210 105, 205 115, 198 122 Z" fill="#38bdf8"/>
+    
+    <!-- Aleta Pectoral -->
+    <path d="M 210 175 C 225 195, 240 215, 255 220 C 250 205, 240 190, 225 175 Z" fill="#0284c7"/>
+    
+    <!-- Aleta Caudal (Flukes) -->
+    <path d="M 115 185 C 95 175, 80 165, 75 172 C 85 182, 100 186, 110 188 C 100 192, 85 200, 78 208 C 84 212, 100 200, 118 190 Z" fill="#38bdf8"/>
+    
+    <!-- Pulso bioacústico emitido desde la frente -->
+    <circle cx="270" cy="148" r="4" fill="#ffffff" filter="url(#neonGlow)"/>
+    <path d="M 278 142 C 288 140, 298 145, 304 154" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 286 135 C 302 132, 318 140, 326 156" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 295 128 C 316 124, 338 135, 348 158" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 2. ELEFANTE (Silueta bioacústica e infrasonido) -->
+  <!-- ========================================== -->
+  <g id="elefante" filter="url(#softGlow)">
+    <!-- Cabeza y silueta noble del elefante africano -->
+    <!-- Oreja amplia y abierta -->
+    <path d="M 160 270 
+             C 140 240, 175 220, 205 225 
+             C 220 230, 230 250, 220 285 
+             C 210 320, 175 325, 155 305
+             C 145 295, 150 280, 160 270 Z" 
+          fill="url(#amberGlow)" fill-opacity="0.85"/>
+    
+    <!-- Frente, lomo y trompa arqueada -->
+    <path d="M 205 225 
+             C 230 222, 250 235, 255 255 
+             C 260 275, 252 300, 245 325
+             C 240 345, 235 365, 245 375
+             C 255 385, 270 375, 268 360
+             C 265 340, 272 320, 280 295
+             C 285 275, 278 250, 260 235
+             C 240 218, 215 215, 195 222 Z" 
+          fill="#f59e0b" fill-opacity="0.9"/>
+          
+    <!-- Colmillo estilizado brillante -->
+    <path d="M 242 295 C 255 305, 270 315, 278 305 C 268 298, 255 290, 245 288 Z" fill="#fef3c7"/>
+    
+    <!-- Ojo inteligente -->
+    <circle cx="225" cy="245" r="3" fill="#ffffff"/>
+    
+    <!-- Ondas de resonancia de infrasonido en la laringe -->
+    <circle cx="218" cy="275" r="5" fill="#fbbf24" fill-opacity="0.8" filter="url(#neonGlow)"/>
+    <path d="M 200 290 Q 220 300, 240 290" stroke="#fbbf24" stroke-width="2.5" fill="none"/>
+    <path d="M 190 302 Q 220 315, 250 302" stroke="#d97706" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 3. PRIMATE (Bonobo / Chimpancé - Perfil cognitivo) -->
+  <!-- ========================================== -->
+  <g id="primate" filter="url(#softGlow)">
+    <!-- Perfil craneal pensante con cresta y mandíbula expresiva -->
+    <path d="M 410 75 
+             C 435 72, 460 88, 465 110 
+             C 470 130, 460 148, 445 155
+             C 458 162, 462 178, 452 195
+             C 440 215, 415 218, 395 210
+             C 380 205, 370 190, 375 172
+             C 365 168, 355 152, 362 138
+             C 368 125, 380 128, 388 132
+             C 382 110, 392 82, 410 75 Z" 
+          fill="url(#emeraldNeon)" fill-opacity="0.88"/>
+          
+    <!-- Ojo con chispa de conciencia y ceja supraorbital -->
+    <path d="M 418 105 C 428 102, 442 106, 448 114" stroke="#a7f3d0" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <circle cx="432" cy="116" r="3.5" fill="#ffffff" filter="url(#neonGlow)"/>
+
+    <!-- Red neural cerebral iluminada con nodos -->
+    <circle cx="410" cy="100" r="3" fill="#6ee7b7"/>
+    <circle cx="425" cy="90" r="2.5" fill="#a7f3d0"/>
+    <circle cx="395" cy="110" r="2" fill="#6ee7b7"/>
+    <line x1="410" y1="100" x2="425" y2="90" stroke="#a7f3d0" stroke-width="1.2"/>
+    <line x1="410" y1="100" x2="395" y2="110" stroke="#a7f3d0" stroke-width="1.2"/>
+    <line x1="410" y1="100" x2="432" y2="116" stroke="#a7f3d0" stroke-width="1"/>
+
+    <!-- Formantes vocales emitidos desde la boca abierta -->
+    <path d="M 448 185 Q 465 185, 478 180" stroke="#34d399" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M 452 195 Q 475 198, 492 190" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 4. CÓRVIDO / PSITÁCIDO (Cuervo / Ave en vuelo sintáctico) -->
+  <!-- ========================================== -->
+  <g id="ave" filter="url(#softGlow)">
+    <!-- Silueta aerodinámica de cuervo en vuelo con alas desplegadas -->
+    <!-- Ala izquierda superior -->
+    <path d="M 540 180 
+             C 520 130, 545 80, 590 65 
+             C 610 85, 620 120, 580 160 Z" 
+          fill="url(#violetNeon)" fill-opacity="0.9"/>
+          
+    <!-- Cuerpo y cabeza con pico deíctico afilado -->
+    <path d="M 560 170 
+             C 580 165, 610 155, 635 150 
+             C 660 148, 680 152, 695 154
+             C 670 162, 650 170, 630 175
+             C 610 185, 580 195, 555 185 Z" 
+          fill="#a855f7"/>
+          
+    <!-- Ojo del cuervo penetrante -->
+    <circle cx="625" cy="158" r="2.5" fill="#ffffff"/>
+    
+    <!-- Ala derecha inferior -->
+    <path d="M 570 180 
+             C 590 205, 630 235, 665 245 
+             C 645 225, 620 195, 595 180 Z" 
+          fill="#7c3aed" fill-opacity="0.85"/>
+          
+    <!-- Cola en cuña -->
+    <path d="M 555 185 L 505 205 L 515 185 L 500 175 Z" fill="#6b21a8"/>
+    
+    <!-- Notas sintácticas emitidas desde el pico (ABC-D) -->
+    <circle cx="705" cy="152" r="3.5" fill="#c084fc" filter="url(#neonGlow)"/>
+    <circle cx="720" cy="144" r="2.5" fill="#e9d5ff"/>
+    <circle cx="732" cy="155" r="3" fill="#a855f7"/>
+    <path d="M 705 152 L 720 144 L 732 155" stroke="#e9d5ff" stroke-width="1.2" stroke-dasharray="2 2" fill="none"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- NODO CENTRAL: EL PUENTE INTER-ESPECIES      -->
+  <!-- ========================================== -->
+  <g transform="translate(370, 275)" filter="url(#neonGlow)">
+    <circle cx="0" cy="0" r="28" fill="#00f2fe" fill-opacity="0.1" stroke="#00f2fe" stroke-width="2"/>
+    <circle cx="0" cy="0" r="14" fill="#00f2fe" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="6" fill="#ffffff"/>
+    
+    <!-- Icono de rayo central / Frankenstein -->
+    <path d="M -2 -10 L 4 -2 L 0 0 L 3 8 L -4 1 L -1 -1 Z" fill="#00f2fe"/>
+  </g>
+
+  <!-- Rótulos tipográficos futuristas -->
+  <text x="370" y="325" text-anchor="middle" fill="#00f2fe" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="11" font-weight="700" letter-spacing="3">UNIVERSAL INTER-SPECIES PROTOCOL</text>
+  <text x="370" y="342" text-anchor="middle" fill="#94a3b8" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="9" letter-spacing="1">CETÁCEOS · PRIMATES · CÓRVIDOS · ELEFANTES</text>
+
+  <!-- Puntos de constelación neural brillante -->
+  <circle cx="210" cy="150" r="4" fill="#00f2fe" filter="url(#neonGlow)"/>
+  <circle cx="415" cy="120" r="4" fill="#34d399" filter="url(#neonGlow)"/>
+  <circle cx="570" cy="165" r="4" fill="#c084fc" filter="url(#neonGlow)"/>
+  <circle cx="225" cy="295" r="4" fill="#fbbf24" filter="url(#neonGlow)"/>
 </svg>
