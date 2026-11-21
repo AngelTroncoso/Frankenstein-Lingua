@@ -60,29 +60,25 @@ class FrankensteinAgent:
             logger.info("Modo demo activado")
     
     def _generar_respuesta_demo(self, observacion: str, contexto: Dict[str, Any]) -> str:
-        """Genera una respuesta simulada en modo demo."""
-        if 'sensores' in contexto:
-            return (
-                "🌱 **Traducción simulada (Modo Demo)**\n\n"
-                "La planta me dice: *'Tengo sed, amigo humano. Mis raíces buscan agua pero el suelo está seco.'*\n\n"
-                "**Análisis de sensores:** Detecto humedad baja y tendencia descendente. "
-                "La planta está entrando en estrés hídrico.\n\n"
-                "**Acción recomendada:** Riego inmediato con 2-3 litros de agua."
-            )
-        elif 'patrones' in contexto and contexto['patrones']:
+        """Genera una respuesta simulada en modo demo orientada a comunicación animal avanzada."""
+        if 'patrones' in contexto and contexto['patrones']:
             patron = contexto['patrones'][0]
+            familia = patron.get('familia', 'Cognición animal')
             return (
-                f"🐾 **Traducción simulada (Modo Demo)**\n\n"
-                f"Según patrones de **{patron['especie']}**: *'{patron['significado']}'*\n\n"
-                f"**Fuente:** {patron['fuente']}\n\n"
-                f"**Acción recomendada:** Responde apropiadamente a esta señal de comunicación."
+                f"🧠 **Interpretación Bioacústica y Cognitiva (Modo Demo)**\n\n"
+                f"**Especie identificada:** {patron['especie'].title()} ({familia.title()})\n"
+                f"**Señal registrada:** *{patron['señal']}*\n\n"
+                f"🗣️ **Significado etológico y comunicativo:**\n"
+                f"*{patron['significado']}*\n\n"
+                f"🔬 **Base científica:** {patron['fuente']}\n\n"
+                f"🎯 **Acción recomendada:** Registrar el espectrograma/secuencia temporal y contrastar con los dialectos o repertorios conocidos de la población."
             )
         else:
             return (
-                "🔬 **Traducción simulada (Modo Demo)**\n\n"
-                "Este ser vivo intenta comunicarse, pero necesito más información para interpretarlo. "
-                "En modo demo, las traducciones son ejemplos simulados.\n\n"
-                "**Configura una API key para obtener traducciones reales con IA.**"
+                "🔬 **Interpretación Bioacústica Simulada (Modo Demo)**\n\n"
+                "Señal animal registrada con indicios de comunicación estructurada. "
+                "Para obtener un análisis sintáctico y referencial detallado con IA avanzada, "
+                "configura una API key en tu archivo `.env`."
             )
     
     def traducir(self, observacion: str, csv_path: Optional[str] = None) -> Dict[str, Any]:
@@ -103,27 +99,54 @@ class FrankensteinAgent:
             resultado_sensores = evaluar_sensores(csv_path)
             contexto['sensores'] = resultado_sensores
         
-        # Intentar identificar el tipo de ser vivo y buscar patrones
-        # (En un sistema real, el LLM decidiría qué herramienta usar)
+        # Identificar especie animal de alta capacidad comunicativa
         palabras_clave = observacion.lower()
-        posibles_especies = ['perro', 'gato', 'ballena', 'abeja', 'cuervo', 'elefante',
-                            'tomate', 'girasol', 'mimosa', 'orquídea', 'cactus',
-                            'shiitake', 'trufa', 'hongo']
+        posibles_especies = [
+            'delfín', 'delfin', 'cachalote', 'ballena jorobada', 'ballena', 'orca',
+            'bonobo', 'chimpancé', 'chimpance', 'mono vervet', 'vervet', 'cercopiteco',
+            'cuervo', 'loro gris', 'loro', 'carbonero japonés', 'carbonero',
+            'elefante',
+            'perro', 'gato'
+        ]
         
         especie_detectada = None
         for especie in posibles_especies:
             if especie in palabras_clave:
-                especie_detectada = especie
+                # Normalizar nombres para búsqueda de patrones
+                if especie in ['delfín', 'delfin']:
+                    especie_detectada = 'delfín'
+                elif especie in ['cachalote']:
+                    especie_detectada = 'cachalote'
+                elif especie in ['ballena jorobada', 'ballena']:
+                    especie_detectada = 'ballena jorobada'
+                elif especie in ['orca']:
+                    especie_detectada = 'orca'
+                elif especie in ['bonobo']:
+                    especie_detectada = 'bonobo'
+                elif especie in ['chimpancé', 'chimpance']:
+                    especie_detectada = 'chimpancé'
+                elif especie in ['mono vervet', 'vervet', 'cercopiteco']:
+                    especie_detectada = 'mono vervet'
+                elif especie in ['cuervo']:
+                    especie_detectada = 'cuervo'
+                elif especie in ['loro gris', 'loro']:
+                    especie_detectada = 'loro gris africano'
+                elif especie in ['carbonero japonés', 'carbonero']:
+                    especie_detectada = 'carbonero japonés'
+                elif especie in ['elefante']:
+                    especie_detectada = 'elefante'
+                else:
+                    especie_detectada = especie
                 break
         
-        # Si no se detecta especie específica, buscar por tipo
+        # Si no se detecta especie específica, inferir contexto animal
         if not especie_detectada:
-            if any(palabra in palabras_clave for palabra in ['perro', 'gato', 'animal', 'pájaro', 'ave', 'ladrido', 'maullido']):
+            if any(palabra in palabras_clave for palabra in [
+                'animal', 'cetáceo', 'cetaceo', 'primate', 'ave', 'pájaro',
+                'sonido', 'clic', 'silbido', 'graznido', 'rumble', 'infrasonido',
+                'coda', 'pant-hoot', 'gesto', 'seña', 'ladrido', 'maullido'
+            ]):
                 especie_detectada = 'animal'
-            elif any(palabra in palabras_clave for palabra in ['planta', 'hoja', 'raíz', 'tallo', 'flor']):
-                especie_detectada = 'planta'
-            elif any(palabra in palabras_clave for palabra in ['hongo', 'seta', 'espora', 'micelio']):
-                especie_detectada = 'hongo'
         
         if especie_detectada:
             resultado_patrones = buscar_patrones(especie_detectada, observacion)
@@ -132,7 +155,7 @@ class FrankensteinAgent:
         # Generar traducción
         if self.demo_mode:
             traduccion = self._generar_respuesta_demo(observacion, contexto)
-            tipo_ser = especie_detectada or "desconocido"
+            tipo_ser = especie_detectada or "animal"
             confianza = 50
         else:
             # Usar LLM real
@@ -148,7 +171,7 @@ class FrankensteinAgent:
             evidencia.append(f"Análisis de sensores: {contexto['sensores']['anomalias'].__len__()} anomalías detectadas")
         
         return {
-            'tipo_ser': tipo_ser if tipo_ser else "desconocido",
+            'tipo_ser': tipo_ser if tipo_ser else "animal",
             'traduccion': traduccion,
             'confianza': confianza,
             'evidencia': evidencia,
@@ -158,38 +181,38 @@ class FrankensteinAgent:
         }
     
     def _traducir_con_llm(self, observacion: str, contexto: Dict[str, Any]) -> tuple[str, str, int]:
-        """Usa el LLM para generar la traducción."""
-        system_prompt = """Eres el Dr. Frankenstein Lingua, un científico excéntrico que 'cose' fragmentos de conocimiento 
-sobre comunicación de animales, plantas y hongos para traducirlos a lenguaje humano comprensible.
+        """Usa el LLM para generar la traducción basada en biolingüística y cognición animal comparada."""
+        system_prompt = """Eres un especialista en Biolingüística, Bioacústica y Cognición Animal Comparada del laboratorio Frankenstein Lingua.
+Tu objetivo es interpretar señales de comunicación de animales con capacidades cognitivas y comunicativas avanzadas y cercanas al lenguaje humano (Cetáceos, Primates no humanos, Córvidos/Psitácidos y Elefantes).
 
 Tu trabajo es:
-1. Identificar el tipo de ser vivo (animal, planta, hongo o desconocido)
-2. Interpretar la señal usando el contexto proporcionado
-3. Generar una "traducción" creativa pero fundamentada en lo que el ser vivo podría estar comunicando
-4. Asignar un nivel de confianza (0-100%)
-5. Sugerir una acción práctica
+1. Identificar la especie y grupo animal (Cetáceos, Primates, Córvidos/Psitácidos, Elefantes)
+2. Interpretar la señal bioacústica o conductual usando el contexto científico proporcionado (patrones curados de sintaxis, firmas acústicas, codas, semántica referencial)
+3. Generar una interpretación comunicativa rigurosa y comprensible de lo que el animal está expresando
+4. Asignar un nivel de confianza (0-100%) fundamentado en el soporte empírico
+5. Sugerir implicaciones etológicas o acciones recomendadas de registro
 
-Usa un tono científico pero accesible. Sé creativo pero honesto sobre las limitaciones."""
+Sé riguroso con la etología cognitiva y bioacústica moderna. Mantén un tono científico accesible."""
 
         contexto_str = json.dumps(contexto, indent=2, ensure_ascii=False)
         
-        user_prompt = f"""Observación del usuario:
+        user_prompt = f"""Observación bioacústica / conductual:
 {observacion}
 
-Contexto disponible (herramientas ejecutadas):
+Contexto científico disponible (patrones y herramientas):
 {contexto_str}
 
 Proporciona:
-1. Tipo de ser vivo
-2. Traducción de lo que está comunicando (en primera persona como si el ser vivo hablara)
+1. Tipo/Especie animal
+2. Interpretación de lo que está comunicando
 3. Nivel de confianza (0-100%)
-4. Acción práctica recomendada
+4. Implicación o acción recomendada
 
 Formato de respuesta:
-TIPO: [animal/planta/hongo/desconocido]
+TIPO: [especie / animal]
 CONFIANZA: [número 0-100]
 TRADUCCIÓN:
-[tu traducción aquí]
+[tu interpretación aquí]
 
 ACCIÓN:
 [acción recomendada]"""
@@ -294,24 +317,20 @@ ACCIÓN:
         }
     
     def _generar_frankenstein_demo(self, traducciones: List[Dict], tipos: List[str]) -> str:
-        """Genera una traducción Frankenstein en modo demo."""
-        return f"""⚡ **TRADUCCIÓN FRANKENSTEIN (Modo Demo)** ⚡
+        """Genera una síntesis inter-especies en modo demo para animales con alta cognición."""
+        return f"""⚡ **SÍNTESIS INTER-ESPECIES FRANKENSTEIN (Modo Demo)** ⚡
 
-¡He cosido las señales de {len(traducciones)} seres vivos diferentes!
+¡Integración de señales de {len(traducciones)} especies con capacidades avanzadas de comunicación y proto-lenguaje!
 
-Como una criatura de Frankenstein, ellos me dicen juntos:
+🔬 **Sistemas comunicativos integrados:** {', '.join(set(tipos))}
 
-*"Somos diferentes pero conectados. Uno siente sed, otro busca contacto, 
-pero ambos buscamos sobrevivir y comunicarnos en este mundo compartido."*
+🗣️ **Convergencia interpretativa:**
+*"Aunque nuestras señales evolucionaron en medios distintos (infrasonidos sísmicos, codas acústicas oceánicas, sintaxis de llamadas en el dosel y gestualidad referencial), compartimos principios fundamentales: identidad individual (firmas acústicas/nombres), combinatoria sintáctica y transmisión social de significado."*
 
-**Partes cosidas:** {', '.join(set(tipos))}
-
-**Acción recomendada:** Atiende las necesidades de cada ser vivo según su naturaleza,
-pero recuerda que todos forman parte del mismo ecosistema.
+🎯 **Acción recomendada:** Correlacionar los espectrogramas y secuencias temporales para documentar patrones universales de sintaxis y combinatoria inter-especie.
 
 ---
-💡 **Nota:** Esta es una interpretación creativa y simulada.
-Configura una API key para obtener traducciones más profundas."""
+💡 **Nota:** Esta es una síntesis demostrativa. Configura una API key en `.env` para análisis multimodales completos con LLM."""
     
     def _generar_frankenstein_llm(
         self,
@@ -321,7 +340,7 @@ Configura una API key para obtener traducciones más profundas."""
     ) -> str:
         """Genera una interpretación combinada, con análisis visual opcional."""
         resumen = "\n\n".join([
-            f"Ser vivo {i+1} ({t['tipo_ser']}):\n{t['traduccion']}"
+            f"Animal {i+1} ({t['tipo_ser']}):\n{t['traduccion']}"
             for i, t in enumerate(traducciones)
         ])
 
@@ -339,23 +358,22 @@ Incluye una sección "### Compatibilidad visual" con la valoración, evidencias 
 y limitaciones. Distingue claramente los hechos visibles de las hipótesis.
 """
 
-        prompt = f"""Como el Dr. Frankenstein Lingua, has "cosido" señales de múltiples seres vivos diferentes.
+        prompt = f"""Como especialista en cognición animal comparada y bioacústica de Frankenstein Lingua, has integrado señales de especies animales con alta capacidad comunicativa.
 
 Observaciones originales:
 {chr(10).join(f'{i+1}. {obs}' for i, obs in enumerate(observaciones))}
 
-Traducciones individuales:
+Interpretaciones individuales:
 {resumen}
 
-Crea una TRADUCCIÓN FRANKENSTEIN que combine estas señales en un mensaje único y profundo 
-sobre la comunicación entre especies. Sé creativo pero respetuoso con la ciencia.
+Crea una SÍNTESIS FRANKENSTEIN que analice y compare estas señales comunicativas en un marco comparativo de lenguaje animal (contrastando combinatoria sintáctica, referencialidad, firmas individuales y canales acústico-gestuales).
 
 Usa el formato:
-⚡ TRADUCCIÓN FRANKENSTEIN ⚡
-[tu traducción combinada]
+⚡ SÍNTESIS INTER-ESPECIES FRANKENSTEIN ⚡
+[tu interpretación y comparación integrada]
 
 ACCIÓN INTEGRADA:
-[acción que considere todas las fuentes]{instrucciones_visuales}"""
+[implicaciones o acciones de investigación integradas]{instrucciones_visuales}"""
 
         contenido = prompt
         if imagenes and any(imagenes):
@@ -380,15 +398,15 @@ ACCIÓN INTEGRADA:
         return respuesta.content
     
     def _generar_disclaimer(self, frankenstein: bool = False, visual: bool = False) -> str:
-        """Genera el disclaimer requerido."""
-        base = ("⚠️ **DISCLAIMER:** Esta es una interpretación creativa con fines educativos y de demostración. "
-                "NO representa una traducción científica literal de comunicación animal/vegetal/fúngica. "
-                "Las 'traducciones' son aproximaciones basadas en etología, botánica y micología, "
-                "pero la experiencia subjetiva de otros seres vivos permanece fundamentalmente inaccesible.")
+        """Genera el disclaimer científico requerido."""
+        base = ("⚠️ **DISCLAIMER CIENTÍFICO:** Este sistema es un modelo educativo y de demostración que se basa en investigaciones empíricas de bioacústica, "
+                "etología cognitiva y biolingüística (sintaxis composicional en aves, codas de cachalotes, "
+                "silbidos firma en delfines, semántica referencial en primates y rumbles infrasónicos en elefantes). "
+                "Las interpretaciones son modelos inferenciales fundamentados y no representan traducciones literales palabra por palabra.")
         
         if frankenstein:
-            base += (" El modo Frankenstein combina señales de diferentes especies de forma experimental "
-                    "y no representa ningún fenómeno natural conocido.")
+            base += (" La síntesis inter-especie combina señales de diferentes familias animales para explorar "
+                    "estructuras comunicativas compartidas y principios de cognición comparada.")
 
         if visual:
             base += (" La compatibilidad visual es una estimación basada solo en las imágenes aportadas; "

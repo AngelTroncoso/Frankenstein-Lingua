@@ -61,12 +61,16 @@ def mostrar_header():
     with st.container(border=True):
         columna_titulo, columna_imagen = st.columns([1.5, 1])
         with columna_titulo:
-            st.caption("LABORATORIO INTERESPECIE · CIENCIA + IA")
+            st.caption("LABORATORIO DE COMUNICACIÓN ANIMAL AVANZADA · BIOACÚSTICA + COGNICIÓN")
             st.title("Frankenstein Lingua")
-            st.write("Un puente visual entre las señales de la naturaleza y la curiosidad humana.")
+            st.write(
+                "Decodificación de señales, sintaxis acústica y cognición en las especies "
+                "con las capacidades más cercanas a la comunicación y lenguaje: "
+                "Cetáceos, Primates no humanos, Córvidos/Psitácidos y Elefantes."
+            )
             if modo == 'demo':
                 st.warning(
-                    "Modo Demo · Las interpretaciones son simuladas.",
+                    "Modo Demo · Las interpretaciones son simuladas con base científica.",
                     icon=":material/science:"
                 )
             else:
@@ -74,7 +78,7 @@ def mostrar_header():
         with columna_imagen:
             st.image(
                 str(HERO_IMAGE_PATH),
-                caption="Señales conectadas entre especies",
+                caption="Sistemas de comunicación animal avanzada",
                 width=360
             )
 
@@ -86,7 +90,7 @@ def mostrar_resultado(resultado: dict, titulo: str = "Traducción"):
         st.subheader(titulo)
         columna_tipo, columna_confianza = st.columns([3, 1])
         with columna_tipo:
-            st.caption("Ser vivo identificado")
+            st.caption("Especie / Grupo identificado")
             st.write(resultado['tipo_ser'].title())
         with columna_confianza:
             st.metric("Confianza estimada", f"{confianza}%")
@@ -110,20 +114,24 @@ def mostrar_resultado(resultado: dict, titulo: str = "Traducción"):
 
 def tab_simple():
     """Interfaz para traducción simple."""
-    st.header("Traducción simple", icon=":material/biotech:")
-    st.write("Describe una señal observada. Puedes añadir lecturas de sensores para complementar el análisis de una planta.")
+    st.header("Traducción e interpretación bioacústica", icon=":material/biotech:")
+    st.write(
+        "Describe una señal comunicativa observada (silbidos firma, codas rítmicas, "
+        "combinatoria de llamadas vocales, alarmas semánticas o infrasonidos). "
+        "Opcionalmente puedes adjuntar datos bioacústicos tabulares."
+    )
 
     with st.container(border=True):
         with st.form("traduccion_simple"):
             observacion = st.text_area(
-                "¿Qué observaste?",
-                placeholder="Ejemplo: Mi perro ladra de forma aguda y repetida mientras mira hacia la puerta.",
+                "¿Qué señal observaste?",
+                placeholder="Ejemplo: Un cachalote emite una serie de clics rítmicos en patrón 1+1+3 con modulación coordinada de tempo ante su clan matrilíneo.",
                 height=130
             )
             archivo_csv = st.file_uploader(
-                "Lecturas de sensores (opcional)",
+                "Datos bioacústicos o telemetría (opcional)",
                 type=['csv'],
-                help="Añade un CSV con datos ambientales para complementar la interpretación."
+                help="Añade un CSV con datos temporales o de frecuencia para complementar el análisis."
             )
             traducir = st.form_submit_button(
                 "Generar interpretación",
@@ -277,53 +285,46 @@ def tab_frankenstein():
 def tab_ejemplos():
     """Guion de demo con ejemplos listos."""
     st.header("Ejemplos guiados", icon=":material/play_circle:")
-    st.write("Explora tres escenarios de muestra para conocer las distintas funciones.")
+    st.write("Explora tres escenarios de bioacústica y cognición animal con las especies cumbre en lenguaje.")
 
-    columna_animal, columna_planta, columna_integrada = st.columns(3)
+    columna_cetaceo, columna_primate, columna_integrada = st.columns(3)
 
-    with columna_animal:
+    with columna_cetaceo:
         with st.container(border=True):
-            st.subheader("Señal animal")
-            st.caption("Interpretación de una conducta observada.")
+            st.subheader("Cachalote (Cetáceos)")
+            st.caption("Codas rítmicas y combinatoria acústica (Project CETI).")
             if st.button("Probar ejemplo", key="ej1", width="stretch"):
-                observacion = "Mi perro está ladrando de forma aguda y repetida mientras mira hacia la puerta y mueve la cola"
-                with st.spinner("Analizando la observación..."):
+                observacion = "Un cachalote emite una coda rítmica de clics con patrón 1+1+3 y tempo coordinado ante miembros de su clan matrilíneo"
+                with st.spinner("Analizando la señal bioacústica..."):
                     resultado = st.session_state.agente.traducir(observacion)
                 if 'error' in resultado:
                     st.error(f"Error: {resultado['error']}")
                 else:
                     mostrar_resultado(resultado)
 
-    with columna_planta:
+    with columna_primate:
         with st.container(border=True):
-            st.subheader("Planta y sensores")
-            st.caption("Usa el CSV de muestra incluido en el proyecto.")
+            st.subheader("Chimpancé (Primates)")
+            st.caption("Secuencias ordenadas de pant-hoots y percusión.")
             if st.button("Probar ejemplo", key="ej2", width="stretch"):
-                observacion = "Mi planta de tomate tiene las hojas enrolladas hacia arriba"
-                csv_ejemplo = Path("data") / "sensores_ejemplo.csv"
-                if csv_ejemplo.exists():
-                    with st.spinner("Analizando la observación y los sensores..."):
-                        resultado = st.session_state.agente.traducir(
-                            observacion,
-                            str(csv_ejemplo)
-                        )
-                    if 'error' in resultado:
-                        st.error(f"Error: {resultado['error']}")
-                    else:
-                        mostrar_resultado(resultado)
+                observacion = "Un chimpancé emite secuencias ordenadas de pant-hoots combinadas con tamborileo de raíces al avistar a su grupo"
+                with st.spinner("Analizando la sintaxis vocal y percusión..."):
+                    resultado = st.session_state.agente.traducir(observacion)
+                if 'error' in resultado:
+                    st.error(f"Error: {resultado['error']}")
                 else:
-                    st.error("No se encontró data/sensores_ejemplo.csv.")
+                    mostrar_resultado(resultado)
 
     with columna_integrada:
         with st.container(border=True):
             st.subheader("Modo Frankenstein")
-            st.caption("Integra señales de especies diferentes.")
+            st.caption("Convergencia inter-especies: Delfín + Elefante.")
             if st.button("Probar ejemplo", key="ej3", width="stretch"):
                 observaciones = [
-                    "Una abeja está realizando una danza en forma de 8",
-                    "Un cactus presenta arrugas en su superficie"
+                    "Un delfín mular reproduce un silbido firma individual característico mientras interactúa con miembros de la manada",
+                    "Un elefante africano emite un rumble de infrasonido de baja frecuencia con etiqueta nominal individual"
                 ]
-                with st.spinner("Integrando las señales..."):
+                with st.spinner("Integrando las señales comunicativas..."):
                     resultado = st.session_state.agente.traducir_frankenstein(observaciones)
                 if 'error' in resultado:
                     st.error(f"Error: {resultado['error']}")
@@ -360,15 +361,38 @@ def sidebar():
     """Barra lateral con información y configuración."""
     with st.sidebar:
         st.markdown("### Laboratorio")
-        st.caption("Frankenstein Lingua · exploración interespecie")
+        st.caption("Frankenstein Lingua · Comunicación animal avanzada")
+
+        st.subheader("Especies en estudio")
+        st.markdown(
+            "- 🐬 **Cetáceos:** Delfines, Cachalotes, Orcas, Ballenas\n"
+            "- 🦧 **Primates:** Bonobos, Chimpancés, Monos Vervet\n"
+            "- 🦅 **Córvidos y Psitácidos:** Cuervos, Loro gris, Carbonero\n"
+            "- 🐘 **Elefantes:** Infrasonidos nominales y sismosonidos"
+        )
 
         st.subheader("Base de conocimiento")
         try:
             from agent.tools import cargar_patrones
             num_patrones = len(cargar_patrones())
-            st.caption(f"{num_patrones} patrones científicos disponibles")
+            st.caption(f"{num_patrones} patrones bioacústicos curados")
         except Exception as error:
             st.warning(f"No se pudo cargar la base de patrones: {error}")
+
+        st.subheader("Configuración")
+        modo_actual = st.session_state.get('provider', 'demo')
+        st.markdown(f"**Proveedor:** {modo_actual.upper()}")
+
+        if modo_actual == 'demo':
+            st.caption("Configura una API key en `.env` para habilitar un proveedor de IA.")
+
+        with st.expander("Acerca de este proyecto"):
+            st.write(
+                "Herramienta educativa y de investigación en bioacústica y cognición animal comparada. "
+                "Las interpretaciones se basan en investigaciones de sintaxis acústica, codas, "
+                "silbidos firma y semántica referencial."
+            )
+        st.caption("Versión 2.0.0 Animal Edition")
 
         st.subheader("Configuración")
         modo_actual = st.session_state.get('provider', 'demo')

@@ -18,12 +18,12 @@ def test_cargar_patrones():
 
 def test_buscar_patrones_por_especie():
     """Verifica la búsqueda de patrones por especie específica."""
-    resultado = buscar_patrones("perro", "ladrido agudo")
+    resultado = buscar_patrones("delfín", "silbido")
     
-    assert resultado['encontrados'] > 0, "Debe encontrar patrones de perro"
+    assert resultado['encontrados'] > 0, "Debe encontrar patrones de delfín"
     assert 'patrones' in resultado
     assert len(resultado['patrones']) > 0
-    assert resultado['patrones'][0]['especie'] == 'perro'
+    assert resultado['patrones'][0]['especie'] == 'delfín'
 
 
 def test_buscar_patrones_por_tipo():

@@ -3,227 +3,202 @@
     {
       "id": 1,
       "tipo": "animal",
-      "especie": "perro",
-      "señal": "ladrido agudo repetido",
-      "significado": "alerta o solicitud de atención",
-      "confianza_base": 85,
-      "fuente": "Etología canina básica (Coren, 2004)"
+      "familia": "cetáceos",
+      "especie": "delfín",
+      "señal": "silbido firma individual de modulación estereofónica",
+      "significado": "identidad acústica personal (nombre propio) usado para presentarse, convocar y mantener cohesión social",
+      "confianza_base": 92,
+      "fuente": "Bioacústica de cetáceos (Janik & Sayigh, 2013; King & Janik, 2013)"
     },
     {
       "id": 2,
       "tipo": "animal",
-      "especie": "gato",
-      "señal": "ronroneo",
-      "significado": "estado de satisfacción o autoconsuelo",
-      "confianza_base": 80,
-      "fuente": "Comportamiento felino (Bradshaw, 2013)"
+      "familia": "cetáceos",
+      "especie": "delfín",
+      "señal": "ráfagas pulsadas y trenes de clics sincronizados",
+      "significado": "coordinación táctica durante maniobras complejas de caza cooperativa y negociación de estatus",
+      "confianza_base": 88,
+      "fuente": "Estructura social y vocal en delfines mulares (Connor et al., 2006)"
     },
     {
       "id": 3,
       "tipo": "animal",
-      "especie": "ballena",
-      "señal": "canto de baja frecuencia",
-      "significado": "comunicación a larga distancia, posible llamado de apareamiento",
-      "confianza_base": 70,
-      "fuente": "Bioacústica marina (Payne & Webb, 1971)"
+      "familia": "cetáceos",
+      "especie": "cachalote",
+      "señal": "coda rítmica de clics con combinatoria temporal y ritmo 1+1+3",
+      "significado": "codificación sintáctica compleja con propiedades de alfabeto acústico y ornamentación de tempo",
+      "confianza_base": 90,
+      "fuente": "Project CETI: Estructura combinatoria en codas de cachalote (Sharma et al., Nature Communications 2024)"
     },
     {
       "id": 4,
       "tipo": "animal",
-      "especie": "abeja",
-      "señal": "danza en forma de 8",
-      "significado": "indica dirección y distancia de fuente de néctar",
-      "confianza_base": 90,
-      "fuente": "Von Frisch, 1967 - Premio Nobel"
+      "familia": "cetáceos",
+      "especie": "cachalote",
+      "señal": "coda de identidad de clan vocal",
+      "significado": "transmisión de marcadores culturales que indican afiliación al clan matrilíneo y dialecto regional",
+      "confianza_base": 89,
+      "fuente": "Cultura y dialectos vocales en cachalotes (Rendell & Whitehead, 2003)"
     },
     {
       "id": 5,
       "tipo": "animal",
-      "especie": "cuervo",
-      "señal": "graznido múltiple y agudo",
-      "significado": "alarma ante depredador cercano",
-      "confianza_base": 75,
-      "fuente": "Inteligencia aviar (Marzluff & Angell, 2005)"
+      "familia": "cetáceos",
+      "especie": "ballena jorobada",
+      "señal": "canto sintáctico jerárquico estructurado en temas, frases y subfrases",
+      "significado": "transmisión cultural compleja y sintaxis temporal de larga duración que evoluciona anualmente en el océano",
+      "confianza_base": 87,
+      "fuente": "Evolución cultural de cantos de ballena (Payne & McVay, 1971; Garland et al., 2011)"
     },
     {
       "id": 6,
-      "tipo": "planta",
-      "especie": "tomate",
-      "señal": "hojas enrolladas hacia arriba",
-      "significado": "estrés hídrico severo",
-      "confianza_base": 88,
-      "fuente": "Fisiología vegetal aplicada (Taiz & Zeiger, 2010)"
+      "tipo": "animal",
+      "familia": "cetáceos",
+      "especie": "orca",
+      "señal": "llamadas pulsadas discretas con dialecto de grupo matrilineal",
+      "significado": "identificador cultural de manada y mantenimiento de lazos cooperativos entre parientes cercanos",
+      "confianza_base": 91,
+      "fuente": "Dialectos vocales y aprendizaje social en orcas (Ford, 1991; Foote et al., 2006)"
     },
     {
       "id": 7,
-      "tipo": "planta",
-      "especie": "girasol",
-      "señal": "inclinación del tallo hacia la luz",
-      "significado": "fototropismo positivo - búsqueda de luz solar",
-      "confianza_base": 92,
-      "fuente": "Darwin, 1880 - The Power of Movement in Plants"
+      "tipo": "animal",
+      "familia": "primates",
+      "especie": "bonobo",
+      "señal": "secuencia de vocalizaciones peep y barks con entonación modulada",
+      "significado": "comunicación vocal contextualmente flexible con sintaxis bivalente y estados afectivos compartidos",
+      "confianza_base": 86,
+      "fuente": "Flexibilidad contextual vocal en bonobos (Clay & Zuberbühler, 2011)"
     },
     {
       "id": 8,
-      "tipo": "planta",
-      "especie": "mimosa pudica",
-      "señal": "cierre rápido de hojas al tacto",
-      "significado": "respuesta defensiva ante estímulo mecánico",
+      "tipo": "animal",
+      "familia": "primates",
+      "especie": "bonobo",
+      "señal": "combinación de lexigramas y gestos deícticos señalando objetos",
+      "significado": "comunicación simbólica referencial y comprensión de conceptos abstractos y oraciones estructuradas",
       "confianza_base": 95,
-      "fuente": "Tigmonastia vegetal (Volkov et al., 2010)"
+      "fuente": "Lenguaje simbólico en simios: estudios con Kanzi (Savage-Rumbaugh & Lewin, 1994)"
     },
     {
       "id": 9,
-      "tipo": "planta",
-      "especie": "orquídea",
-      "señal": "raíces aéreas verdes",
-      "significado": "fotosíntesis radicular - necesita humedad ambiental",
-      "confianza_base": 82,
-      "fuente": "Botánica de orquídeas epífitas (Benzing, 1990)"
+      "tipo": "animal",
+      "familia": "primates",
+      "especie": "chimpancé",
+      "señal": "secuencias ordenadas de pant-hoots combinadas con tamborileo de raíces",
+      "significado": "secuencias sintácticas combinatorias para reclutamiento de grupo, coordenadas espaciales e identidad individual",
+      "confianza_base": 89,
+      "fuente": "Estructura sintáctica en secuencias vocales de chimpancés (Girard-Buttoz et al., Communications Biology 2022)"
     },
     {
       "id": 10,
-      "tipo": "planta",
-      "especie": "cactus",
-      "señal": "arrugas en la superficie",
-      "significado": "deshidratación - necesita riego moderado",
-      "confianza_base": 87,
-      "fuente": "Plantas suculentas (Nobel, 2003)"
+      "tipo": "animal",
+      "familia": "primates",
+      "especie": "chimpancé",
+      "señal": "gestos manuales referenciales intencionales con alternancia de mirada",
+      "significado": "comunicación gestual intencional dirigida para solicitar cooperación, comida o desplazamiento conjunto",
+      "confianza_base": 93,
+      "fuente": "El repertorio gestual de los chimpancés (Hobaiter & Byrne, 2014)"
     },
     {
       "id": 11,
-      "tipo": "hongo",
-      "especie": "shiitake",
-      "señal": "formación de primordios",
-      "significado": "condiciones óptimas de humedad y temperatura para fructificación",
-      "confianza_base": 85,
-      "fuente": "Cultivo de hongos comestibles (Stamets, 2000)"
+      "tipo": "animal",
+      "familia": "primates",
+      "especie": "mono vervet",
+      "señal": "llamada de alarma acústica para leopardo con tonos cortos y entrecortados",
+      "significado": "semántica referencial que instruye inmediatamente a la tropa a trepar a los extremos de las ramas",
+      "confianza_base": 96,
+      "fuente": "Semántica referencial en primates no humanos (Seyfarth, Cheney & Marler, 1980)"
     },
     {
       "id": 12,
-      "tipo": "hongo",
-      "especie": "hongo de la miel",
-      "señal": "bioluminiscencia nocturna",
-      "significado": "metabolismo activo, posible atracción de dispersores de esporas",
-      "confianza_base": 65,
-      "fuente": "Hongos bioluminiscentes (Oliveira & Stevani, 2009)"
+      "tipo": "animal",
+      "familia": "primates",
+      "especie": "mono vervet",
+      "señal": "llamada de alarma acústica para águila con chasquido bisilábico",
+      "significado": "semántica referencial que provoca mirar al cielo y buscar cobertura densa terrestre",
+      "confianza_base": 95,
+      "fuente": "Semántica referencial en primates no humanos (Seyfarth, Cheney & Marler, 1980)"
     },
     {
       "id": 13,
-      "tipo": "hongo",
-      "especie": "moho del pan",
-      "señal": "emisión de esporas negras",
-      "significado": "fase reproductiva madura - alta dispersión",
-      "confianza_base": 90,
-      "fuente": "Micología básica (Alexopoulos, 1996)"
+      "tipo": "animal",
+      "familia": "primates",
+      "especie": "mono vervet",
+      "señal": "llamada de alarma acústica para serpiente con siseo prolongado",
+      "significado": "semántica referencial que induce al grupo a erguirse en dos patas e inspeccionar minuciosamente el suelo",
+      "confianza_base": 94,
+      "fuente": "Semántica referencial en primates no humanos (Seyfarth, Cheney & Marler, 1980)"
     },
     {
       "id": 14,
-      "tipo": "hongo",
-      "especie": "trufa",
-      "señal": "olor intenso a compuestos volátiles",
-      "significado": "madurez completa - señal para animales dispersores",
-      "confianza_base": 88,
-      "fuente": "Ecología de trufas (Hall et al., 2007)"
+      "tipo": "animal",
+      "familia": "córvidos y psitácidos",
+      "especie": "cuervo",
+      "señal": "graznido de reclutamiento modulado con señalamiento deíctico con el pico",
+      "significado": "atención conjunta y comunicación deíctica referencial dirigida a un compañero social seleccionado",
+      "confianza_base": 90,
+      "fuente": "Comunicación gestual y deíctica en cuervos (Pika & Bugnyar, 2011)"
     },
     {
       "id": 15,
       "tipo": "animal",
-      "especie": "elefante",
-      "señal": "infrasonido de baja frecuencia",
-      "significado": "comunicación a kilómetros de distancia, coordinación de manada",
-      "confianza_base": 78,
-      "fuente": "Comunicación de elefantes (Poole et al., 1988)"
+      "familia": "córvidos y psitácidos",
+      "especie": "cuervo",
+      "señal": "modulación de tono y frecuencia acústica ante congéneres conocidos",
+      "significado": "expresión diferenciada del vínculo social y valencia afectiva hacia aliados vs rivales en la jerarquía",
+      "confianza_base": 88,
+      "fuente": "Reconocimiento y reciprocidad vocal en córvidos (Boeckle et al., 2012)"
     },
     {
       "id": 16,
       "tipo": "animal",
-      "especie": "delfín",
-      "señal": "clicks ultrasónicos",
-      "significado": "ecolocación para navegación y caza",
-      "confianza_base": 88,
-      "fuente": "Bioacústica de cetáceos (Au & Hastings, 2008)"
+      "familia": "córvidos y psitácidos",
+      "especie": "loro gris africano",
+      "señal": "etiquetado vocal referencial de materia, color, forma y conteo numérico",
+      "significado": "uso funcional del lenguaje vocal para categorizar propiedades abstractas y relaciones lógicas (igual/diferente)",
+      "confianza_base": 97,
+      "fuente": "Cognición y comunicación conceptual en loros grises (Pepperberg, 1999 - Alex Studies)"
     },
     {
       "id": 17,
       "tipo": "animal",
-      "especie": "lobo",
-      "señal": "aullido prolongado",
-      "significado": "comunicación de posición a la manada o demarcación territorial",
-      "confianza_base": 82,
-      "fuente": "Comportamiento social de cánidos (Mech & Boitani, 2003)"
+      "familia": "córvidos y psitácidos",
+      "especie": "carbonero japonés",
+      "señal": "combinación sintáctica de notas de alerta y reclutamiento abc-d",
+      "significado": "sintaxis composicional estricta donde la combinación ordenada altera y especifica el significado conductual",
+      "confianza_base": 93,
+      "fuente": "Sintaxis composicional en aves cantoras (Suzuki, Wheatcroft & Griesser, Nature Communications 2016)"
     },
     {
       "id": 18,
       "tipo": "animal",
-      "especie": "hormiga",
-      "señal": "rastro de feromonas",
-      "significado": "marcación de camino hacia fuente de alimento",
-      "confianza_base": 93,
-      "fuente": "Comunicación química en insectos sociales (Hölldobler & Wilson, 1990)"
+      "familia": "elefantes",
+      "especie": "elefante",
+      "señal": "rumble de infrasonido con frecuencia de resonancia y etiqueta nominal individual",
+      "significado": "identificador sonoro específico análogo a un nombre propio dirigido a un miembro puntual de la manada",
+      "confianza_base": 91,
+      "fuente": "Etiquetas vocales nominales en elefantes africanos (Pardo et al., Nature Ecology & Evolution 2024)"
     },
     {
       "id": 19,
-      "tipo": "planta",
-      "especie": "venus atrapamoscas",
-      "señal": "cierre rápido de trampa",
-      "significado": "captura de presa detectada por pelos sensoriales",
-      "confianza_base": 91,
-      "fuente": "Plantas carnívoras (Ellison & Adamec, 2018)"
+      "tipo": "animal",
+      "familia": "elefantes",
+      "especie": "elefante",
+      "señal": "rumble de alarma específico para enjambre de abejas con sacudida de cabeza",
+      "significado": "alarma referencial especializada que instruye repliegue defensivo inmediato y protección de crías",
+      "confianza_base": 94,
+      "fuente": "Alarma acústica referencial ante abejas en elefantes (King et al., 2010)"
     },
     {
       "id": 20,
-      "tipo": "planta",
-      "especie": "eucalipto",
-      "señal": "emisión de compuestos volátiles",
-      "significado": "defensa química contra herbívoros y señalización a plantas cercanas",
-      "confianza_base": 79,
-      "fuente": "Comunicación química entre plantas (Karban & Maron, 2002)"
-    },
-    {
-      "id": 21,
-      "tipo": "planta",
-      "especie": "frijol",
-      "señal": "movimiento circadiano de hojas",
-      "significado": "ritmo biológico de 24h - respuesta a ciclo luz-oscuridad",
-      "confianza_base": 86,
-      "fuente": "Cronobiología vegetal (McClung, 2006)"
-    },
-    {
-      "id": 22,
-      "tipo": "hongo",
-      "especie": "penicillium",
-      "señal": "producción de penicilina",
-      "significado": "defensa antibacteriana del territorio microbiano",
-      "confianza_base": 89,
-      "fuente": "Antibióticos fúngicos (Fleming, 1929 / revisión moderna)"
-    },
-    {
-      "id": 23,
-      "tipo": "hongo",
-      "especie": "red micorrízica",
-      "señal": "intercambio de nutrientes",
-      "significado": "simbiosis mutualista - red de comunicación subterránea entre árboles",
-      "confianza_base": 84,
-      "fuente": "Wood Wide Web (Simard et al., 2012)"
-    },
-    {
-      "id": 24,
       "tipo": "animal",
-      "especie": "luciérnaga",
-      "señal": "patrón de destellos luminosos",
-      "significado": "cortejo reproductivo - cada especie tiene patrón único",
-      "confianza_base": 87,
-      "fuente": "Bioluminiscencia en coleópteros (Lloyd, 1983)"
-    },
-    {
-      "id": 25,
-      "tipo": "animal",
-      "especie": "murciélago",
-      "señal": "pulsos ultrasónicos",
-      "significado": "navegación por ecolocación en oscuridad total",
-      "confianza_base": 90,
-      "fuente": "Sistemas de sonar biológico (Griffin, 1958)"
+      "familia": "elefantes",
+      "especie": "elefante",
+      "señal": "emisión sísmica podal de ondas acústicas de muy baja frecuencia",
+      "significado": "comunicación sísmica a larga distancia a través del sustrato terrestre para coordinar clanes a decenas de kilómetros",
+      "confianza_base": 88,
+      "fuente": "Comunicación sísmica en paquidermos (O'Connell-Rodwell, 2007)"
     }
   ]
 }
