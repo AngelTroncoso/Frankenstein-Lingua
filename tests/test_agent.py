@@ -113,5 +113,23 @@ def test_confianza_rango_valido():
     assert 0 <= resultado['confianza'] <= 100
 
 
+def test_traducir_interespecies_demo():
+    """Verifica la transposición inter-especies del router neural."""
+    agente = FrankensteinAgent(llm_provider="demo")
+    resultado = agente.traducir_interespecies(
+        especie_origen="cachalote",
+        senal_origen="coda rítmica 1+1+3 de alerta ante orcas",
+        especie_destino="delfín"
+    )
+    
+    assert 'especie_origen' in resultado
+    assert 'especie_destino' in resultado
+    assert 'invariante_semantico' in resultado
+    assert 'senal_transpuesta' in resultado
+    assert 'canal_receptor' in resultado
+    assert 'metricas' in resultado
+    assert resultado['inteligibilidad_estimada'] > 50
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

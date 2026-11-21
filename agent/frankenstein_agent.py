@@ -413,3 +413,163 @@ ACCIÓN INTEGRADA:
                     "no demuestra compatibilidad biológica ni sustituye una evaluación profesional.")
         
         return base
+
+    def traducir_interespecies(
+        self,
+        especie_origen: str,
+        senal_origen: str,
+        especie_destino: str
+    ) -> Dict[str, Any]:
+        """
+        Inter-Species Neural Router: Transpone una señal comunicativa de la Especie A
+        al canal bioacústico y protocolo sintáctico de la Especie B.
+        """
+        from agent.bioacoustics import calcular_metricas_biolinguisticas, obtener_perfil_especie
+        metricas = calcular_metricas_biolinguisticas(senal_origen, especie_origen)
+        perfil_destino = obtener_perfil_especie(especie_destino)
+
+        if self.demo_mode:
+            return self._generar_interespecies_demo(especie_origen, senal_origen, especie_destino, metricas, perfil_destino)
+        else:
+            return self._generar_interespecies_llm(especie_origen, senal_origen, especie_destino, metricas, perfil_destino)
+
+    def _generar_interespecies_demo(
+        self,
+        origen: str,
+        senal: str,
+        destino: str,
+        metricas: Dict[str, Any],
+        perfil_dest: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Genera la transposición inter-especie en modo demo."""
+        # Determinar invariantes semánticos universales
+        senal_baja = senal.lower()
+        if any(w in senal_baja for w in ['alerta', 'alarma', 'peligro', 'depredador', 'orca', 'leopardo']):
+            intencion = "Alerta temprana de amenaza y activación de repliegue defensivo"
+            valencia = "Alta urgencia / Evitación"
+            urgencia = "Crítica (Prioridad 1)"
+        elif any(w in senal_baja for w in ['nombre', 'firma', 'identidad', 'clan', 'quién']):
+            intencion = "Transmisión de identidad social, linaje matrilineal y cohesión de grupo"
+            valencia = "Afiliación / Cohesión"
+            urgencia = "Media (Protocolo social)"
+        else:
+            intencion = "Coordinación espacial de recursos, desplazamiento cooperativo y llamado de atención"
+            valencia = "Cooperativa / Exploratoria"
+            urgencia = "Moderada (Comunicación referencial)"
+
+        # Adaptación según la especie receptora
+        dest_clave = perfil_dest['especie_clave']
+        if dest_clave in ['delfín', 'orca']:
+            senal_transpuesta = "Silbido firma estereofónico ascendente con tren de ráfagas pulsadas (14 kHz) para modulación de alerta en cardumen"
+            mecanismo = "Modulación de frecuencias ultrasónicas en sacos nasales de la frente (melón acústico)"
+        elif dest_clave in ['cachalote']:
+            senal_transpuesta = "Coda rítmica de 5 clics de alta presión sonora con intervalo regular 1+1+3 transmitida por el espermaceti"
+            mecanismo = "Pulsos mecánicos de cavidad nasal submarina detectables a kilómetros"
+        elif dest_clave in ['elefante']:
+            senal_transpuesta = "Rumble infrasónico profundo (19 Hz) con resonancia laríngea propagado por ondas sísmicas superficiales del terreno"
+            mecanismo = "Vibración sismográfica podal con detección por mecanorreceptores en las extremidades"
+        elif dest_clave in ['chimpancé', 'bonobo']:
+            senal_transpuesta = "Secuencia combinatoria de pant-hoots de alarma acompañada de tamborileo de raíces y gestos deícticos direccionales"
+            mecanismo = "Sintaxis vocal supralaríngea y combinatoria gestual referencial con alternancia de mirada"
+        elif dest_clave in ['cuervo', 'loro gris africano', 'carbonero japonés']:
+            senal_transpuesta = "Combinación sintáctica de notas agudas (secuencia ABC-D) con inflexión rápida y señalamiento deíctico con el pico"
+            mecanismo = "Control bicanal de la siringe aviar y atención visual conjunta"
+        else:
+            senal_transpuesta = f"Señal bioacústica modulada en canal {perfil_dest['canal']}"
+            mecanismo = "Transducción bioacústica multimodal adaptada"
+
+        return {
+            'especie_origen': origen.title(),
+            'senal_origen': senal,
+            'especie_destino': destino.title(),
+            'invariante_semantico': {
+                'intencion': intencion,
+                'valencia': valencia,
+                'urgencia': urgencia
+            },
+            'senal_transpuesta': senal_transpuesta,
+            'canal_receptor': perfil_dest['canal'],
+            'mecanismo_biologico': mecanismo,
+            'inteligibilidad_estimada': 89,
+            'metricas': metricas,
+            'disclaimer': self._generar_disclaimer(frankenstein=True)
+        }
+
+    def _generar_interespecies_llm(
+        self,
+        origen: str,
+        senal: str,
+        destino: str,
+        metricas: Dict[str, Any],
+        perfil_dest: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Usa el LLM para transpolar el protocolo comunicativo entre dos especies."""
+        system_prompt = """Eres el motor Neural Router de Frankenstein Lingua, especializado en biolingüística comparada y traducción inter-especies.
+Tu tarea es tomar una señal de comunicación de una ESPECIE A y transponer su contenido semántico al canal bioacústico y protocolo sintáctico de una ESPECIE B con alta capacidad de lenguaje (Cetáceos, Primates, Córvidos/Loros, Elefantes).
+
+Debes:
+1. Extraer los invariantes semánticos universales (intención, valencia, urgencia).
+2. Adaptar la señal al canal físico real de la especie destino (ej. infrasonidos sísmicos, codas de clics, silbidos modulados, gestos con alternancia de mirada, secuencias sintácticas de notas).
+3. Evaluar la inteligibilidad teórica del mensaje transpolar."""
+
+        user_prompt = f"""Especie Origen: {origen}
+Señal observada: {senal}
+
+Especie Destino: {destino}
+Canal receptor: {perfil_dest['canal']}
+Rango Hz: {perfil_dest['rango_frecuencia_hz']}
+
+Proporciona:
+INVARIANTE_INTENCION: [intención comunicativa fundamental]
+INVARIANTE_URGENCIA: [nivel de urgencia]
+SEÑAL_TRANSPUESTA: [cómo emite la especie destino este mensaje en su propio sistema bioacústico/conductual]
+MECANISMO: [mecanismo fisiológico/bioacústico utilizado]
+INTELIGIBILIDAD: [número 0-100]"""
+
+        try:
+            messages = [
+                SystemMessage(content=system_prompt),
+                HumanMessage(content=user_prompt)
+            ]
+            resp = self.llm.invoke(messages).content
+
+            # Parsear respuesta estructurada o fallback
+            intencion = "Transmisión de información referencial coordinada"
+            urgencia = "Media-Alta"
+            senal_tr = f"Secuencia bioacústica adaptada a {destino}"
+            mecanismo = perfil_dest['canal']
+            inteligibilidad = 87
+
+            for line in resp.split('\n'):
+                if "INVARIANTE_INTENCION:" in line:
+                    intencion = line.split("INVARIANTE_INTENCION:")[1].strip()
+                elif "INVARIANTE_URGENCIA:" in line:
+                    urgencia = line.split("INVARIANTE_URGENCIA:")[1].strip()
+                elif "SEÑAL_TRANSPUESTA:" in line:
+                    senal_tr = line.split("SEÑAL_TRANSPUESTA:")[1].strip()
+                elif "MECANISMO:" in line:
+                    mecanismo = line.split("MECANISMO:")[1].strip()
+                elif "INTELIGIBILIDAD:" in line:
+                    try:
+                        inteligibilidad = int(''.join(filter(str.isdigit, line)))
+                    except:
+                        inteligibilidad = 87
+
+            return {
+                'especie_origen': origen.title(),
+                'senal_origen': senal,
+                'especie_destino': destino.title(),
+                'invariante_semantico': {
+                    'intencion': intencion,
+                    'valencia': 'Adaptación biolingüística neutral/cooperativa',
+                    'urgencia': urgencia
+                },
+                'senal_transpuesta': senal_tr,
+                'canal_receptor': perfil_dest['canal'],
+                'mecanismo_biologico': mecanismo,
+                'inteligibilidad_estimada': inteligibilidad,
+                'metricas': metricas,
+                'disclaimer': self._generar_disclaimer(frankenstein=True)
+            }
+        except Exception as e:
+            return self._generar_interespecies_demo(origen, senal, destino, metricas, perfil_dest)
